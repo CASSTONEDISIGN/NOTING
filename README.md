@@ -18,4 +18,4 @@ By using this font, you are agree to the Product Usage Agreement:
 
 Any donation are very appreciated. Thank you.
 
-아무거나 푸쉬
+아무거나 푸쉬ㅁㄴㅇ
