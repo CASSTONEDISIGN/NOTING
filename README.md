@@ -17,3 +17,5 @@ By using this font, you are agree to the Product Usage Agreement:
 + Paypal account for donation: https://paypal.me/aswangga
 
 Any donation are very appreciated. Thank you.
+
+아무거나 푸쉬
