@@ -1,24 +1,21 @@
-package com.example.noting_backend.dto;
+package com.example.noting_backend.user.entity;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 
-@Entity(name = "")
-@Setter
+@Entity(name = "user")
 @Getter
-@ToString
 @Builder
 public class UserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long User_num;
+    private Long id;
 
     @Column
-    private String id;
+    private String email;
 
     @Column
     private String pw;
