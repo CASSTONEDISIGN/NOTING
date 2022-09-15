@@ -1,5 +1,6 @@
 package com.example.noting_backend.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,14 +11,15 @@ import javax.persistence.*;
 @Setter
 @Getter
 @ToString
-public class UserData {
+@Builder
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long User_num;
 
     @Column
-    private String Id;
+    private String id;
 
     @Column
-    private String Pw;
+    private String pw;
 }
