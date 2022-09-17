@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface UserService {
     User join(User user);
     Optional<User> login(String id, String pw);
+    Optional<User> login(User user);
 }

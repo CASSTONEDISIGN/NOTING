@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class JpaUserRepository implements UserRepository{
+public class JpaUserRepository implements UserRepository {
 
     private final EntityManager em;
 
@@ -25,11 +25,22 @@ public class JpaUserRepository implements UserRepository{
     }
 
     @Override
-    public Optional<User> findByEmail(String email){
+    public Optional<User> findByEmail(String email) {
         List<User> result = em.createQuery("select u from User u where u.email = :email", User.class)
                 .setParameter("email", email)
                 .getResultList();
         return result.stream().findAny();
     }
 
+    @Override
+    public Optional<User> finduser(User userEntity) {
+        List<User> result = em.createQuery("select m from User m where m.email = :email and m.pw = :pw", User.class)
+                .setParameter("email", userEntity.getEmail())
+                .setParameter("pw", userEntity.getPw())
+                .getResultList();
+        if (result.isEmpty()) {
+            return Optional.empty();
+        }
+        return result.stream().findAny();
+    }
 }

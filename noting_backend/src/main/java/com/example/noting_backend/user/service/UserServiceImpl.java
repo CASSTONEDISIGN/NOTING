@@ -31,4 +31,9 @@ public class UserServiceImpl implements UserService{
     public Optional<User> login(String id, String pw) {
         return Optional.empty();
     }
+
+    @Override
+    public Optional<User> login(User user) {
+        return userRepository.finduser(user);
+    }
 }
