@@ -1,9 +1,11 @@
 package com.example.noting_backend.user.repository;
 
-import com.example.noting_backend.user.entity.UserEntity;
+import com.example.noting_backend.user.entity.User;
+
+import java.util.Optional;
 
 public interface UserRepository {
-//    Optional<UserEntity> FindForLogin(String id, String pw);
-//    UserData save(UserData userData);
-    UserEntity save(UserEntity userEntity);
+    User save(User user);
+    Optional<User> findById(Long id);
+    Optional<User> findByEmail(String email);
 }
