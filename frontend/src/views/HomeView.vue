@@ -1,39 +1,166 @@
 <script setup>
 import { RouterLink } from "vue-router";
+
+const opnelist = () => {
+
+}
+
 </script>
 
 <template>
-  <header>
-    <span class="logo"> Noting </span>
-    <nav>
-      <RouterLink to="/login/deligate">사장 로그인</RouterLink>
-      <RouterLink to="/login/customer">고객 로그인</RouterLink>
-    </nav>
-  </header>
-  <main>Main</main>
+  <div class="home">
+    <header>
+      <div class="logo">
+        <img src="../assets/favicon.ico" class="ringing" alt="logo" />
+        <!-- <img src="../assets/No Wating.png" class="hide" alt="No Wating" />
+        <img src="../assets/Noting.png" class="appear" alt="Noting" /> -->
+      </div>
+      <nav>
+        <button class="account_button" type="button" onclick="openlist">
+          <div>아이콘</div>
+          <span>내 계정</span>
+          <div>밑 화살표</div>
+        </button>
+        <!-- <RouterLink to="/login/deligate">사장 로그인</RouterLink>
+        <RouterLink to="/login/customer">고객 로그인</RouterLink> -->
+      </nav>
+    </header>
+    <main>Main</main>
+    <footer>footer</footer>
+  </div>
 </template>
 
-<style scoped>
-  @font-face {
-  font-family:'Aloevera';
-  src: url('../assets/Aloevera-OVoWO.ttf') format('truetype');
+<style lang="scss" scoped>
+@font-face {
+  font-family: "Aloevera";
+  src: url("../assets/Aloevera-OVoWO.ttf") format("truetype");
   font-weight: 700;
 }
 header {
   width: 90vw;
   height: min-content;
   display: flex;
-  padding: 1.5rem;
+  padding: 0 1.5rem;
   justify-content: space-between;
   font-family: Aloevra;
+  align-items: center;
 }
 nav {
   display: flex;
   gap: 1rem;
+  .account_button{
+    display: flex;
+    background-color: rgb(167, 168, 169);
+    border: none;
+  }
+  .account_button:hover{
+    cursor: pointer;
+    background-color: rgb(209, 211, 212);
+  }
+  .choice_list{
+    font-size: 12px;
+    line-height: 15px;
+    padding: 8px 16px;
+    color: rgb(23, 43, 77);
+  }
 }
-.logo{
-  font-family: Aloevra;
+
+main {
+  height: 120vh;
+  background-color: #adff2f;
 }
+.home {
+  display: flex;
+  flex-direction: column;
+}
+
+//logo
+.logo {
+  width: fit-content;
+  .hide {
+    -webkit-animation: flip-in-hor-bottom 1s
+      cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: flip-in-hor-bottom 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation-delay: 1.5s;
+  }
+
+  .appear {
+    -webkit-animation: flip-in-hor-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+      both;
+    animation: flip-in-hor-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation-delay: 1.5s;
+  }
+  .ringing {
+    width: 80px;
+  }
+}
+
+//keyframes
+@-webkit-keyframes flip-in-hor-bottom {
+  0% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    opacity: 1;
+  }
+  20% {
+    -webkit-transform: rotateX(80deg);
+    transform: rotateX(80deg);
+  }
+  100% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    opacity: 0;
+  }
+}
+@keyframes flip-in-hor-bottom {
+  0% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    opacity: 1;
+  }
+  20% {
+    -webkit-transform: rotateX(80deg);
+    transform: rotateX(80deg);
+  }
+  100% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes flip-in-hor-top {
+  0% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    opacity: 0;
+  }
+  20% {
+    -webkit-transform: rotateX(80deg);
+    transform: rotateX(80deg);
+  }
+  100% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    opacity: 1;
+  }
+}
+@keyframes flip-in-hor-top {
+  0% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    opacity: 0;
+  }
+  20% {
+    -webkit-transform: rotateX(80deg);
+    transform: rotateX(80deg);
+  }
+  100% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    opacity: 1;
+  }
+}
+
 /* header {
     position: absolute;
   
