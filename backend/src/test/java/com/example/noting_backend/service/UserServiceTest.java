@@ -2,6 +2,7 @@ package com.example.noting_backend.service;
 
 import com.example.noting_backend.user.dto.UserDto;
 import com.example.noting_backend.user.entity.User;
+import com.example.noting_backend.user.hash.UserHash;
 import com.example.noting_backend.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,14 +25,14 @@ public class UserServiceTest {
     @Test
     public void 회원가입() throws Exception {
         UserDto userdto = UserDto.builder()
-                .email("spring@gmail.com")
-                .pw("spring")
+                .email("spring2@gmail.com")
+                .pw("spring2")
                 .build();
 
         User result = userService.join(userdto);
 
         assertThat(userdto.getPw()).isEqualTo(result.getPw());
-        System.out.println(result.toString());
+        System.out.println(result);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class UserServiceTest {
                 .email("spring@gmail.com")
                 .pw("spring").build();
 
-        User result1 = userService.join(userDto1);
+        userService.join(userDto1);
 
         UserDto userDto2 = UserDto.builder()
                 .email("spring@gmail.com")
@@ -61,5 +61,30 @@ public class UserServiceTest {
         Optional<com.example.noting_backend.user.entity.User> result = userService.login(user);
 
         assertThat(user.getEmail()).isEqualTo(result.get().getEmail());
+    }
+
+    @Test
+    public void 해시() throws Exception {
+        UserDto userDto1 = UserDto.builder()
+                .id(1L)
+                .email("spring1@gmail.com")
+                .pw("spring1")
+                .build();
+
+        UserDto userDto2 = UserDto.builder()
+                .id(2L)
+                .email("spring2@gmail.com")
+                .pw("spring2")
+                .build();
+
+        UserHash userHash = new UserHash();
+
+        String hash1 = userHash.hash(userDto1);
+        String hash2 = userHash.hash(userDto2);
+
+        System.out.println("hash1 = " + hash1);
+        System.out.println("hash2 = " + hash2);
+
+        assertThat(hash1).isNotEqualTo(hash2);
     }
 }

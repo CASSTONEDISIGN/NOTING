@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class UserDto {
 
+    private long id;
     private String email;
     private String pw;
     private final LocalDateTime createAt = LocalDateTime.now();

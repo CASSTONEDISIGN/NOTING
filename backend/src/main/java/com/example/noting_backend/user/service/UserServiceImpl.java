@@ -18,8 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User join(UserDto userDto) throws Exception {
-        String SALT = userHash.getSALT(userDto);
-        String hashedPw = userHash.hashing(userDto.getPw().getBytes(), SALT);
+        String hashedPw = userHash.hash(userDto);
 
         userDto.setPw(hashedPw);
         User user = userDto.toEntity();
