@@ -7,8 +7,7 @@ import java.util.Optional;
 
 public interface UserService {
     User join(UserDto userdto) throws Exception;
-
-    Optional<com.example.noting_backend.user.entity.User> login(String id, String pw);
-    Optional<com.example.noting_backend.user.entity.User> login(com.example.noting_backend.user.entity.User user);
+    Optional<User> login(UserDto userDto) throws Exception;
+    Optional<User> change(UserDto userDto, String newpw) throws Exception;
 
 }

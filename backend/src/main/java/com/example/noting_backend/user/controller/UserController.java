@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public void loginV2(@Validated @RequestBody com.example.noting_backend.user.entity.User user, BindingResult bindingResult, HttpServletResponse response) {
+    public void loginV2(@Validated @RequestBody UserDto user, BindingResult bindingResult, HttpServletResponse response) throws Exception {
         if (bindingResult.hasErrors()) {
             System.out.println("hasError");
         }

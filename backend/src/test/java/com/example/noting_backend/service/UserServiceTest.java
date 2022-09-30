@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@Transactional
+//@Transactional
 public class UserServiceTest {
 
     @Autowired UserService userService;
@@ -25,8 +25,8 @@ public class UserServiceTest {
     @Test
     public void 회원가입() throws Exception {
         UserDto userdto = UserDto.builder()
-                .email("spring2@gmail.com")
-                .pw("spring2")
+                .email("saqw@gmail.com")
+                .pw("1234")
                 .build();
 
         User result = userService.join(userdto);
@@ -53,14 +53,27 @@ public class UserServiceTest {
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
     }
     @Test
-    public void 로그인(){
-        com.example.noting_backend.user.entity.User user = com.example.noting_backend.user.entity.User.builder()
-                .email("asd")
-                .pw("ddd").build();
+    public void 로그인() throws Exception {
+        UserDto user = UserDto.builder()
+                .email("sa@gmail.com")
+                .pw("1234").build();
 
         Optional<com.example.noting_backend.user.entity.User> result = userService.login(user);
 
         assertThat(user.getEmail()).isEqualTo(result.get().getEmail());
+    }
+
+    @Test
+    public void 비밀번호변경() throws Exception{
+        UserDto userdto = new UserDto();
+        userdto.setEmail("sa@gmail.com");
+        userdto.setPw("1234");
+        //317708c2046daa6e0044431b5b6113519449a0329f48a035b06ba3381803e58c
+
+        Optional<User> result = userService.change(userdto,"aaaa");
+
+        assertThat(userdto.getPw()).isEqualTo(result.get().getPw());
+        System.out.println(result.get().toString());
     }
 
     @Test

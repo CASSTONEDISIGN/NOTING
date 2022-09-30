@@ -29,13 +29,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<com.example.noting_backend.user.entity.User> login(String id, String pw) {
-        return Optional.empty();
-    }
+    public Optional<User> login(UserDto userDto) throws Exception {
+        String hashedPw = userHash.hash(userDto);
 
-    @Override
-    public Optional<com.example.noting_backend.user.entity.User> login(com.example.noting_backend.user.entity.User user) {
+        userDto.setPw(hashedPw);
+        System.out.println(hashedPw);
+        User user = userDto.toEntity();
+
         return userRepository.findUser(user);
+    }
+    @Override
+    public Optional<User> change(UserDto userDto, String newpw) throws Exception {
+
+        // 전 비밀번호를 해쉬함
+        String hashedPw = userHash.hash(userDto);
+        // 비밀번호 셋
+        userDto.setPw(hashedPw);
+        // 엔티티 변환
+        User user = userDto.toEntity();
+        // 새로운 비밀번호 셋
+        userDto.setPw(newpw);
+        // 해쉬
+        String hashedPw2 = userHash.hash(userDto);
+        // 해쉬된 새로운 비밀번호 셋
+
+        return userRepository.changePw(user,hashedPw2);
     }
 
     private void validateDuplicateMember(com.example.noting_backend.user.entity.User user) {
