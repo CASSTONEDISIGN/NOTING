@@ -15,7 +15,7 @@ public class UserDto {
     private long id;
     private String email;
     private String pw;
-    private final LocalDateTime createAt = LocalDateTime.now();
+    private LocalDateTime createAt = LocalDateTime.now();
 
 
     public User toEntity() {

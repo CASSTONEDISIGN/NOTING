@@ -1,5 +1,6 @@
 package com.example.noting_backend.user.repository;
 
+import com.example.noting_backend.user.dto.UserDto;
 import com.example.noting_backend.user.entity.User;
 
 import java.util.Optional;

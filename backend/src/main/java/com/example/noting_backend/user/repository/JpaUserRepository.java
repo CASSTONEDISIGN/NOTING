@@ -1,9 +1,11 @@
 package com.example.noting_backend.user.repository;
 
+import com.example.noting_backend.user.dto.UserDto;
 import com.example.noting_backend.user.entity.User;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,10 +29,10 @@ public class JpaUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> findUser(User userEntity) {
+    public Optional<User> findUser(User user) {
         List<User> result = em.createQuery("select m from User m where m.email = :email and m.pw = :pw", User.class)
-                .setParameter("email", userEntity.getEmail())
-                .setParameter("pw", userEntity.getPw())
+                .setParameter("email", user.getEmail())
+                .setParameter("pw", user.getPw())
                 .getResultList();
         if (result.isEmpty()) {
             return Optional.empty();
@@ -42,15 +44,10 @@ public class JpaUserRepository implements UserRepository {
      */
     @Override
     public Optional<User> changePw(User user, String newpw) {
-        List<User> result = em.createQuery("select m from User m where m.email = :email and m.pw = :pw", User.class)
-                .setParameter("email", user.getEmail())
-                .setParameter("pw", user.getPw())
-                .getResultList();
-        if (result.isEmpty()) {
-            return Optional.empty();
-        }
-
-        Long user_id = result.get(0).getId();
+        // 전 비밀번호를 로그인 유저 찾기
+        Optional<User> result = findUser(user);
+        // 아이디 받아오기
+        Long user_id = result.get().getId();
 
         em.createQuery("update User m set m.pw = :pw where m.id = :id")
                 .setParameter("pw", newpw)

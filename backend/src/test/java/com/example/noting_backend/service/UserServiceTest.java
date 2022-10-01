@@ -56,10 +56,11 @@ public class UserServiceTest {
     public void 로그인() throws Exception {
         UserDto user = UserDto.builder()
                 .email("sa@gmail.com")
-                .pw("1234").build();
+                .pw("aaaa").build();
 
-        Optional<com.example.noting_backend.user.entity.User> result = userService.login(user);
+        Optional<User> result = userService.login(user);
 
+        System.out.println(result.get().getPw());
         assertThat(user.getEmail()).isEqualTo(result.get().getEmail());
     }
 
@@ -68,12 +69,10 @@ public class UserServiceTest {
         UserDto userdto = new UserDto();
         userdto.setEmail("sa@gmail.com");
         userdto.setPw("1234");
-        //317708c2046daa6e0044431b5b6113519449a0329f48a035b06ba3381803e58c
+        //98fd82e58c7854df98a398af0b4e6bb757749626b7e3c3b5e87a080e2e2befe5
 
         Optional<User> result = userService.change(userdto,"aaaa");
 
-        assertThat(userdto.getPw()).isEqualTo(result.get().getPw());
-        System.out.println(result.get().toString());
     }
 
     @Test
