@@ -1,7 +1,11 @@
-package com.example.noting_backend.user.repository;
+package com.example.backend.user.repository;
 
+<<<<<<< Updated upstream:backend/src/main/java/com/example/noting_backend/user/repository/JpaUserRepository.java
 import com.example.noting_backend.user.dto.UserDto;
 import com.example.noting_backend.user.entity.User;
+=======
+import com.example.backend.user.entity.User;
+>>>>>>> Stashed changes:backend/src/main/java/com/example/backend/user/repository/JpaUserRepository.java
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;

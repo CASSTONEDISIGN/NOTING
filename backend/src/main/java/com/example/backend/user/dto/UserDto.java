@@ -1,6 +1,6 @@
-package com.example.noting_backend.user.dto;
+package com.example.backend.user.dto;
 
-import com.example.noting_backend.user.entity.User;
+import com.example.backend.user.entity.User;
 import lombok.*;
 
 import java.time.LocalDateTime;

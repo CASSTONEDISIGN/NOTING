@@ -1,6 +1,6 @@
-package com.example.noting_backend.user.hash;
+package com.example.backend.user.hash;
 
-import com.example.noting_backend.user.dto.UserDto;
+import com.example.backend.user.dto.UserDto;
 import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;

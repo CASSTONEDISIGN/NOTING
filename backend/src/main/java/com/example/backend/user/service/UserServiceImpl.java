@@ -1,10 +1,10 @@
-package com.example.noting_backend.user.service;
+package com.example.backend.user.service;
 
-import com.example.noting_backend.user.dto.UserDto;
-import com.example.noting_backend.user.entity.User;
-import com.example.noting_backend.user.hash.UserHash;
+import com.example.backend.user.dto.UserDto;
+import com.example.backend.user.entity.User;
+import com.example.backend.user.hash.UserHash;
 import lombok.RequiredArgsConstructor;
-import com.example.noting_backend.user.repository.UserRepository;
+import com.example.backend.user.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findUser(user);
     }
     @Override
+<<<<<<< Updated upstream:backend/src/main/java/com/example/noting_backend/user/service/UserServiceImpl.java
     public Optional<User> change(UserDto userDto, String newpw) throws Exception {
         // 생성 시간 가져 오기
         LocalDateTime createTime =  getCreateTime(userDto);
@@ -71,9 +72,18 @@ public class UserServiceImpl implements UserService {
         Optional<User> User = userRepository.findByEmail(userDto.getEmail());
         // 가져온 회원 정보로 생성 시간 가져오기
         return User.get().getCreateAt();
+=======
+    public Optional<com.example.backend.user.entity.User> login(String id, String pw) {
+        return Optional.empty();
     }
 
-    private void validateDuplicateMember(com.example.noting_backend.user.entity.User user) {
+    @Override
+    public Optional<com.example.backend.user.entity.User> login(com.example.backend.user.entity.User user) {
+        return userRepository.findUser(user);
+>>>>>>> Stashed changes:backend/src/main/java/com/example/backend/user/service/UserServiceImpl.java
+    }
+
+    private void validateDuplicateMember(com.example.backend.user.entity.User user) {
         userRepository.findByEmail(user.getEmail())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");

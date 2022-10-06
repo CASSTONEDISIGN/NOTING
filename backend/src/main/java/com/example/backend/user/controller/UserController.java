@@ -1,9 +1,9 @@
-package com.example.noting_backend.user.controller;
+package com.example.backend.user.controller;
 
-import com.example.noting_backend.user.dto.UserDto;
-import com.example.noting_backend.user.entity.User;
-import com.example.noting_backend.user.service.UserService;
-import com.example.noting_backend.user.session.SessionManager;
+import com.example.backend.user.dto.UserDto;
+import com.example.backend.user.entity.User;
+import com.example.backend.user.service.UserService;
+import com.example.backend.user.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -29,11 +29,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
+<<<<<<< Updated upstream:backend/src/main/java/com/example/noting_backend/user/controller/UserController.java
     public void loginV2(@Validated @RequestBody UserDto user, BindingResult bindingResult, HttpServletResponse response) throws Exception {
+=======
+    public void loginV2(@Validated @RequestBody User user, BindingResult bindingResult, HttpServletResponse response) {
+>>>>>>> Stashed changes:backend/src/main/java/com/example/backend/user/controller/UserController.java
         if (bindingResult.hasErrors()) {
             System.out.println("hasError");
         }
-        Optional<com.example.noting_backend.user.entity.User> loginMember = userService.login(user);
+        Optional<User> loginMember = userService.login(user);
 
         if (loginMember.isEmpty()) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
@@ -44,7 +48,7 @@ public class UserController {
         System.out.println("성공");
     }
 
-    @PostMapping("logout")
+    @PostMapping("/logout")
     public String logout(HttpServletRequest request){
         sessionManager.expires(request);
         return "로그아웃";

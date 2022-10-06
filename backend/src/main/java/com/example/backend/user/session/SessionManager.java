@@ -1,4 +1,4 @@
-package com.example.noting_backend.user.session;
+package com.example.backend.user.session;
 
 import org.springframework.stereotype.Component;
 

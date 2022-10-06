@@ -1,9 +1,9 @@
-package com.example.noting_backend.service;
+package com.example.backend.service;
 
-import com.example.noting_backend.user.dto.UserDto;
-import com.example.noting_backend.user.entity.User;
-import com.example.noting_backend.user.hash.UserHash;
-import com.example.noting_backend.user.service.UserService;
+import com.example.backend.user.dto.UserDto;
+import com.example.backend.user.entity.User;
+import com.example.backend.user.hash.UserHash;
+import com.example.backend.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-//@Transactional
+@Transactional
 public class UserServiceTest {
 
     @Autowired UserService userService;
@@ -25,8 +25,8 @@ public class UserServiceTest {
     @Test
     public void 회원가입() throws Exception {
         UserDto userdto = UserDto.builder()
-                .email("saqw@gmail.com")
-                .pw("1234")
+                .email("spring2@gmail.com")
+                .pw("spring2")
                 .build();
 
         User result = userService.join(userdto);
@@ -53,26 +53,14 @@ public class UserServiceTest {
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
     }
     @Test
-    public void 로그인() throws Exception {
-        UserDto user = UserDto.builder()
-                .email("sa@gmail.com")
-                .pw("aaaa").build();
+    public void 로그인(){
+        com.example.backend.user.entity.User user = com.example.backend.user.entity.User.builder()
+                .email("asd")
+                .pw("ddd").build();
 
-        Optional<User> result = userService.login(user);
+        Optional<com.example.backend.user.entity.User> result = userService.login(user);
 
-        System.out.println(result.get().getPw());
         assertThat(user.getEmail()).isEqualTo(result.get().getEmail());
-    }
-
-    @Test
-    public void 비밀번호변경() throws Exception{
-        UserDto userdto = new UserDto();
-        userdto.setEmail("sa@gmail.com");
-        userdto.setPw("1234");
-        //98fd82e58c7854df98a398af0b4e6bb757749626b7e3c3b5e87a080e2e2befe5
-
-        Optional<User> result = userService.change(userdto,"aaaa");
-
     }
 
     @Test
