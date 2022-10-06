@@ -7,6 +7,8 @@ import com.example.backend.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 
 import java.util.Optional;
@@ -15,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-//@Transactional
+@Transactional
 public class UserServiceTest {
 
     @Autowired UserService userService;
@@ -23,14 +25,13 @@ public class UserServiceTest {
 
     @Test
     public void 회원가입() throws Exception {
-        UserDto userdto = UserDto.builder()
-                .email("saqw@gmail.com")
-                .pw("1234")
-                .build();
+        UserDto userDto = UserDto.builder()
+                .email("spring@gmail.com")
+                .pw("spring").build();
 
-        User result = userService.join(userdto);
+        User result = userService.join(userDto);
 
-        assertThat(userdto.getPw()).isEqualTo(result.getPw());
+        assertThat(userDto.getPw()).isEqualTo(result.getPw());
         System.out.println(result);
     }
 
@@ -53,24 +54,24 @@ public class UserServiceTest {
     }
     @Test
     public void 로그인() throws Exception {
-        UserDto user = UserDto.builder()
-                .email("sa@gmail.com")
-                .pw("aaaa").build();
+        UserDto userDto = UserDto.builder()
+                .email("spring@gmail.com")
+                .pw("spring").build();
 
-        Optional<User> result = userService.login(user);
+        Optional<User> result = userService.login(userDto);
 
         System.out.println(result.get().getPw());
-        assertThat(user.getEmail()).isEqualTo(result.get().getEmail());
+        assertThat(userDto.getEmail()).isEqualTo(result.get().getEmail());
     }
 
     @Test
     public void 비밀번호변경() throws Exception{
-        UserDto userdto = new UserDto();
-        userdto.setEmail("sa@gmail.com");
-        userdto.setPw("1234");
+        UserDto userDto = UserDto.builder()
+                .email("spring@gmail.com")
+                .pw("spring").build();
         //98fd82e58c7854df98a398af0b4e6bb757749626b7e3c3b5e87a080e2e2befe5
 
-        Optional<User> result = userService.change(userdto,"aaaa");
+        Optional<User> result = userService.change(userDto,"spring2");
 
     }
 

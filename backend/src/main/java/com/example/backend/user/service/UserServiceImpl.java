@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
 
         validateDuplicateMember(user);
         userRepository.save(user);
+        
         return user;
     }
 
