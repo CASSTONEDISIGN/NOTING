@@ -29,15 +29,11 @@ public class UserController {
     }
 
     @PostMapping("/login")
-<<<<<<< Updated upstream:backend/src/main/java/com/example/noting_backend/user/controller/UserController.java
-    public void loginV2(@Validated @RequestBody UserDto user, BindingResult bindingResult, HttpServletResponse response) throws Exception {
-=======
-    public void loginV2(@Validated @RequestBody User user, BindingResult bindingResult, HttpServletResponse response) {
->>>>>>> Stashed changes:backend/src/main/java/com/example/backend/user/controller/UserController.java
+    public void loginV2(@Validated @RequestBody UserDto userDto, BindingResult bindingResult, HttpServletResponse response) throws Exception {
         if (bindingResult.hasErrors()) {
             System.out.println("hasError");
         }
-        Optional<User> loginMember = userService.login(user);
+        Optional<User> loginMember = userService.login(userDto);
 
         if (loginMember.isEmpty()) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");

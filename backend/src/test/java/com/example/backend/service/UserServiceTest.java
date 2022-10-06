@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 
 import java.util.Optional;
 
@@ -53,21 +52,12 @@ public class UserServiceTest {
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
     }
     @Test
-<<<<<<< Updated upstream:backend/src/test/java/com/example/noting_backend/service/UserServiceTest.java
     public void 로그인() throws Exception {
         UserDto user = UserDto.builder()
                 .email("sa@gmail.com")
                 .pw("aaaa").build();
 
         Optional<User> result = userService.login(user);
-=======
-    public void 로그인(){
-        com.example.backend.user.entity.User user = com.example.backend.user.entity.User.builder()
-                .email("asd")
-                .pw("ddd").build();
-
-        Optional<com.example.backend.user.entity.User> result = userService.login(user);
->>>>>>> Stashed changes:backend/src/test/java/com/example/backend/service/UserServiceTest.java
 
         System.out.println(result.get().getPw());
         assertThat(user.getEmail()).isEqualTo(result.get().getEmail());
