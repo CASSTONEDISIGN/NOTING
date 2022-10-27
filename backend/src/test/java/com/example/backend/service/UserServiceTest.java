@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import java.util.Optional;
 
@@ -25,13 +26,14 @@ public class UserServiceTest {
 
     @Test
     public void 회원가입() throws Exception {
-        UserDto userDto = UserDto.builder()
-                .email("spring@gmail.com")
-                .pw("spring").build();
+        UserDto userdto = UserDto.builder()
+                .email("saqw@gmail.com")
+                .pw("1234")
+                .build();
 
-        User result = userService.join(userDto);
+        User result = userService.join(userdto);
 
-        assertThat(userDto.getPw()).isEqualTo(result.getPw());
+        assertThat(userdto.getPw()).isEqualTo(result.getPw());
         System.out.println(result);
     }
 

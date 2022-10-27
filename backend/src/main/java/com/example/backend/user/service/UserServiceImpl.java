@@ -72,9 +72,11 @@ public class UserServiceImpl implements UserService {
         Optional<User> User = userRepository.findByEmail(userDto.getEmail());
         // 가져온 회원 정보로 생성 시간 가져오기
         return User.get().getCreateAt();
-
     }
 
+    /**
+     * 중복 제거
+     */
     private void validateDuplicateMember(User user) {
         userRepository.findByEmail(user.getEmail())
                 .ifPresent(m -> {

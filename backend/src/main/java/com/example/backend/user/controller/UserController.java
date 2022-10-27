@@ -35,6 +35,7 @@ public class UserController {
         }
         Optional<User> loginMember = userService.login(userDto);
 
+
         if (loginMember.isEmpty()) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             System.out.println("Empty");
@@ -44,7 +45,7 @@ public class UserController {
         System.out.println("성공");
     }
 
-    @PostMapping("/logout")
+    @PostMapping("logout")
     public String logout(HttpServletRequest request){
         sessionManager.expires(request);
         return "로그아웃";

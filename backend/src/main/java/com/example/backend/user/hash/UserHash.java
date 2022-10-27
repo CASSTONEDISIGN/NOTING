@@ -29,7 +29,7 @@ public class UserHash {
     /**
      SALT를 만들기 위함
      **/
-    public byte[] getSalt(UserDto userDto) throws Exception{
+    public byte[] getSalt(com.example.backend.user.dto.UserDto userDto) throws Exception{
         MessageDigest md = MessageDigest.getInstance("SHA-256");
 
         String dateTimeEmail = userDto.getCreateAt()

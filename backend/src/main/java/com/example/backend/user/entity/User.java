@@ -1,7 +1,9 @@
 package com.example.backend.user.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -22,6 +24,7 @@ public class User{
     @Column(name="pw")
     private String pw;
     @Column(name="create_at")
+    @CreationTimestamp
     private LocalDateTime createAt;
     @Column(name="update_at")
     @UpdateTimestamp
