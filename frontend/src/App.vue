@@ -21,3 +21,16 @@ export default {
   }),
 };
 </script>
+
+<style>
+@font-face {
+  font-family:'Alice-Regular';
+  src: url('assets/alice/Alice-Regular.ttf') format('truetype');
+  font-weight: normal;
+}
+.v-application {
+  font-family: 'Alice-Regular', sans-serif !important;
+}
+
+</style>
+
