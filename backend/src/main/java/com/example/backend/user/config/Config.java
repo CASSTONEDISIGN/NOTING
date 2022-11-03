@@ -9,13 +9,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.example.backend.user.repository.UserRepository;
 import com.example.backend.user.repository.JpaUserRepository;
 import com.example.backend.user.service.UserServiceImpl;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 import javax.persistence.EntityManager;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableWebSocket
 public class Config implements WebMvcConfigurer{
 
     private final EntityManager em;

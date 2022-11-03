@@ -10,6 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+<<<<<<< Updated upstream
+=======
+//import javax.transaction.Transactional;
+>>>>>>> Stashed changes
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -19,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@Transactional
+//@Transactional
 public class UserServiceTest {
 
     @Autowired UserService userService;
