@@ -7,7 +7,7 @@
             <v-row>
               <v-col cols="12" md="8">
                 <v-card-text class="mt-12">
-                  <h1 class="text-center display-2 teal--text text--lighten-1">
+                  <h1 class="text-center teal--text text--lighten-1">
                     Sign in to Noting
                   </h1>
                   <div class="text-center mt-4">
@@ -16,6 +16,9 @@
                     </v-btn>
                     <v-btn class="mx-2" fab color="black" outlined>
                       <v-icon>fab fa-facebook-f</v-icon>
+                    </v-btn>
+                    <v-btn class="mx-2" fab color="black" outlined>
+                      <v-icon>fab fa-kaggle</v-icon>
                     </v-btn>
                   </div>
                   <h4 class="text-center mt-4">
@@ -44,14 +47,14 @@
                   </h3>
                 </v-card-text>
                 <div class="text-center mt-3">
-                  <v-btn rounded color="teal lighten-1" dark onclick=""
+                  <v-btn rounded color="teal lighten-1" dark @click="SignIn"
                     >SIGN IN</v-btn
                   >
                 </div>
               </v-col>
               <v-col cols="12" md="4" class="teal lighten-1">
                 <v-card-text class="white--text mt-12">
-                  <h1 class="text-center display-1">오셨군요!</h1>
+                  <h1 class="text-center">어서오세요!</h1>
                   <h5 class="text-center">
                     함께 손쉬운 웨이팅이 가능한 곳으로 떠나기
                   </h5>
@@ -66,7 +69,7 @@
             <v-row class="fill-height">
               <v-col cols="12" md="4" class="teal lighten-1">
                 <v-card-text class="white--text mt-12">
-                  <h1 class="text-center display-1">환영합니다!</h1>
+                  <h1 class="text-center">WELCOME!</h1>
                   <h5 class="text-center">
                     계속하시려면 정보를 입력해주세요
                   </h5>
@@ -78,7 +81,7 @@
 
               <v-col cols="12" md="8">
                 <v-card-text class="mt-12">
-                  <h1 class="text-center display-2 teal--text text--lighten-1">
+                  <h1 class="text-center teal--text text--lighten-1">
                     Create Account
                   </h1>
                   <div class="text-center mt-4">
@@ -88,6 +91,9 @@
 
                     <v-btn class="mx-2" fab color="black" outlined>
                       <v-icon>fab fa-facebook-f</v-icon>
+                    </v-btn>
+                    <v-btn class="mx-2" fab color="black" outlined>
+                      <v-icon>fab fa-kaggle</v-icon>
                     </v-btn>
                   </div>
                   <h4 class="text-center mt-4">
@@ -139,6 +145,12 @@ export default {
   props: {
     source: String,
   },
+  methods: {
+    SignIn: function() {
+      console.log("clicked");
+      this.$router.push('/map');
+    },
+  },
 };
 </script>
 
@@ -149,6 +161,12 @@ export default {
   padding-left: 1.2em;
 }
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
+}
+
+h1 {
+  font-size: 3rem;
+  font-family: "Alice-Regular", sans-serif !important;
+  padding-bottom: 2rem;
 }
 </style>
