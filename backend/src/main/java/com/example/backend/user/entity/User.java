@@ -1,7 +1,6 @@
 package com.example.backend.user.entity;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;

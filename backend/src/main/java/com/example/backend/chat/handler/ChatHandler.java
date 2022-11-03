@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.example.backend.chat.handler;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.configurationprocessor.json.JSONObject;

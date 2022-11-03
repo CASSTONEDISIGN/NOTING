@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.example.backend.user.config;
 
 import com.example.backend.user.hash.UserHash;
 import com.example.backend.user.service.UserService;
@@ -18,10 +18,9 @@ import javax.persistence.EntityManager;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSocket
-public class Config implements WebMvcConfigurer, WebSocketConfigurer {
+public class Config implements WebMvcConfigurer{
 
     private final EntityManager em;
-    private final ChatHandler ch;
 
     @Bean
     public UserService userService(){
@@ -31,10 +30,5 @@ public class Config implements WebMvcConfigurer, WebSocketConfigurer {
     @Bean
     public UserRepository userRepository(){
         return new JpaUserRepository(em);
-    }
-
-    @Override
-    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(ch,"/ws/chat").setAllowedOrigins("*");
     }
 }

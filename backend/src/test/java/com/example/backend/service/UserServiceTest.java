@@ -10,8 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,13 +28,13 @@ public class UserServiceTest {
     @Test
     public void 회원가입() throws Exception {
         UserDto userdto = UserDto.builder()
-                .email("saqw@gmail.com")
-                .pw("1234")
+                .email("spring@gmail.com")
+                .pw("spring")
                 .build();
 
         User result = userService.join(userdto);
 
-        assertThat(userdto.getPw()).isEqualTo(result.getPw());
+        assertThat(userdto.getEmail()).isEqualTo(result.getEmail());
         System.out.println(result);
     }
 
@@ -71,14 +72,12 @@ public class UserServiceTest {
         UserDto userDto = UserDto.builder()
                 .email("spring@gmail.com")
                 .pw("spring").build();
-        //98fd82e58c7854df98a398af0b4e6bb757749626b7e3c3b5e87a080e2e2befe5
 
         Optional<User> result = userService.change(userDto,"spring2");
-
     }
 
     @Test
-    public void 해시() throws Exception {
+    public void 해시중복() throws Exception {
         UserDto userDto1 = UserDto.builder()
                 .id(1L)
                 .email("spring1@gmail.com")
@@ -100,5 +99,20 @@ public class UserServiceTest {
         System.out.println("hash2 = " + hash2);
 
         assertThat(hash1).isNotEqualTo(hash2);
+    }
+    @Test
+    public void 해시() throws Exception {
+        UserDto userDto = UserDto.builder()
+                .id(4L)
+                .email("saqw@gmail.com")
+                .pw("1234")
+                .createAt(LocalDateTime.parse("2022-10-27 14:46:17"))
+                .build();
+
+        UserHash userHash = new UserHash();
+
+        String hash = userHash.hash(userDto);
+
+        System.out.println("hash = " + hash);
     }
 }
