@@ -10,8 +10,6 @@ import com.example.backend.user.repository.UserRepository;
 import com.example.backend.user.repository.JpaUserRepository;
 import com.example.backend.user.service.UserServiceImpl;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import javax.persistence.EntityManager;
 
