@@ -5,22 +5,30 @@ import com.example.backend.user.entity.User;
 import com.example.backend.user.service.UserService;
 import com.example.backend.user.session.SessionManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-@RestController
+@Controller
+@Log4j2
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
     private final SessionManager sessionManager;
+
+    @GetMapping("")
+    public String Home(){
+        return "index";
+    }
 
     @PostMapping("/join")
     public String createUser(@RequestBody UserDto userDto) throws Exception {
@@ -29,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public void loginV2(@Validated @RequestBody UserDto userDto, BindingResult bindingResult, HttpServletResponse response) throws Exception {
+    public void login(@Validated @RequestBody UserDto userDto, BindingResult bindingResult, HttpServletResponse response) throws Exception {
         if (bindingResult.hasErrors()) {
             System.out.println("hasError");
         }
@@ -49,5 +57,11 @@ public class UserController {
     public String logout(HttpServletRequest request){
         sessionManager.expires(request);
         return "로그아웃";
+    }
+
+    @GetMapping("/chat")
+    public String chatGET(){
+        log.info("@ChatController, chat GET()");
+        return "chat";
     }
 }
