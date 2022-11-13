@@ -101,32 +101,37 @@
                   </h4>
                   <v-form>
                     <v-text-field
-                      label="Name"
-                      name="Name"
+                      label="name"
+                      name="name"
+                      v-model="name"
                       prepend-icon="person"
                       type="text"
                       color="teal lighten-1"
                     />
                     <v-text-field
-                      label="Email"
-                      name="Email"
+                      label="email"
+                      name="email"
+                      v-model="email"
                       prepend-icon="email"
                       type="text"
                       color="teal lighten-1"
+                      :rule="[rules.cEmail]"
                     />
 
                     <v-text-field
                       id="password"
-                      label="Password"
+                      label="password"
                       name="password"
+                      v-model="password"
                       prepend-icon="lock"
                       type="password"
                       color="teal lighten-1"
+                      :rule="[rules.cPassword]"
                     />
                   </v-form>
                 </v-card-text>
                 <div class="text-center mt-n5">
-                  <v-btn rounded color="teal lighten-1" dark>SIGN UP</v-btn>
+                  <v-btn rounded color="teal lighten-1" dark @click="SignUp">SIGN UP</v-btn>
                 </div>
               </v-col>
             </v-row>
@@ -138,18 +143,38 @@
 </template>
 
 <script>
+import { get__signin } from '../API/GET/get';
+import {post__signup} from '../API/POST/post';
 export default {
   data: () => ({
     step: 1,
+    name: "",
+    email: "",
+    password: "",
+
+    emailRegex: /^[a-zA-Z.0-9]+@[a-zA-Z_0-9]+?\.[a-zA-Z]+$/,
+    passwordRegex: /^(?=.+[A-Za-z])(?=.+\d)(?=.+[@!%*#?&])[A-Za-z\d@!%*#?&]{8,16}$/,
+    rules: {
+      cEmail: v => this.emailRegex.test(v) && v.length > 1 || "유효한 이메일을 입력해주세요",
+      cPassword: v => this.passwordRegex.test(v) || "유효한 비밀번호를 입력해주세요",
+    },
+    
   }),
   props: {
     source: String,
   },
   methods: {
     SignIn: function() {
-      console.log("clicked");
+      get__signin(this.email, this.password);
+      // 로그인 성공 시 router push
       this.$router.push('/map');
     },
+
+    SignUp: function(e) {
+      e.preventDefault();
+      post__signup(this,name, this.email, this.password);
+    }
+
   },
 };
 </script>

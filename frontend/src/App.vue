@@ -7,14 +7,10 @@
 </template>
 
 <script>
-
-
 export default {
-  name: 'App',
+  name: "App",
 
-  components: {
-    
-  },
+  components: {},
 
   data: () => ({
     //
@@ -24,13 +20,11 @@ export default {
 
 <style>
 @font-face {
-  font-family:'Alice-Regular';
-  src: url('assets/alice/Alice-Regular.ttf') format('truetype');
+  font-family: "Alice-Regular";
+  src: url("assets/alice/Alice-Regular.ttf") format("truetype");
   font-weight: normal;
 }
 .v-application {
-  font-family: 'Alice-Regular', sans-serif !important;
+  font-family: "Alice-Regular", sans-serif !important;
 }
-
 </style>
-

@@ -1,16 +1,55 @@
 <template>
   <div>
-    <div id="map"></div>
-    <div class="button-group">
-      <button @click="displayMarker(markerPositions1)">marker set 1</button>
-      <button @click="displayMarker(markerPositions2)">marker set 2</button>
-      <button @click="displayMarker([])">marker set 3 (empty)</button>
-      <button @click="displayInfoWindow">infowindow</button>
+    <div id="map">
+
+      <!-- Side Bar -->
+      <v-card :class="isOpen ? 'showsideBar' : 'hideSidebar'">
+        <v-toolbar dense floating>
+          <v-text-field
+            hide-details
+            prepend-icon="mdi-magnify"
+            single-line
+          ></v-text-field>
+        </v-toolbar>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="text-h6">
+              Application
+            </v-list-item-title>
+            <v-list-item-title class="text-h6">
+              Application
+            </v-list-item-title>
+            <v-list-item-title class="text-h6">
+              Application
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <button class="fold_button" @click="toggleFold()">
+          <v-icon>mdi-menu-left</v-icon>
+        </button>
+      </v-card>
+      <!--  /Side Bar  -->
+
+      <!-- Map Option Button -->
+      <div class="zoom-button">
+        <v-btn @click="currentPos">
+          <v-icon>mdi-crosshairs-gps</v-icon>
+        </v-btn>
+        <v-btn @click="zoomIn">
+          <v-icon>fa-plus</v-icon>
+        </v-btn>
+        <v-btn @click="zoomOut">
+          <v-icon>fa-minus</v-icon>
+        </v-btn>
+      </div>
     </div>
-    <div class="zoom-button">
-      <button @click="zoomIn">zoomin</button>
-      <button @click="zoomOut">zoomout</button>
-    </div>
+    <!-- <div class="button-group">
+        <button @click="displayMarker(markerPositions1)">marker set 1</button>
+        <button @click="displayMarker(markerPositions2)">marker set 2</button>
+        <button @click="displayMarker([])">marker set 3 (empty)</button>
+        <button @click="displayInfoWindow">infowindow</button>
+      </div> -->
   </div>
 </template>
 
@@ -35,6 +74,7 @@ export default {
       ],
       markers: [],
       infowindow: null,
+      isOpen: true,
     };
   },
   mounted() {
@@ -53,14 +93,14 @@ export default {
     initMap() {
       const container = document.getElementById("map");
       const options = {
-        center: new kakao.maps.LatLng(36.9698032, 127.8721668),
+        // 최초 위치
+        center: new kakao.maps.LatLng(37.9698032, 127.8721668),
         level: 5,
       };
 
       //지도 객체를 등록합니다.
       //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
       this.map = new kakao.maps.Map(container, options);
-    
     },
     zoomIn() {
       let level = this.map.getLevel();
@@ -70,7 +110,23 @@ export default {
       let level = this.map.getLevel();
       this.map.setLevel(level + 1);
     },
-
+    currentPos() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const latlong = new kakao.maps.LatLng(latitude, longitude);
+          this.map.panTo(latlong);
+          this.map.setLevel(1);
+        });
+      } else {
+        alert("현재 위치를 불러오지 못했습니다.");
+      }
+    },
+    toggleFold() {
+      this.isOpen = !this.isOpen;
+      console.log(this.isOpen);
+    },
     displayMarker(markerPositions) {
       if (this.markers.length > 0) {
         this.markers.forEach((marker) => marker.setMap(null));
@@ -132,9 +188,9 @@ export default {
   margin: 10px 0px;
 }
 
-button {
-  margin: 0 3px;
-  width: 32px;
+v-btn {
+  padding: 9px;
+  min-width: fit-content;
   height: 32px;
 }
 
@@ -145,6 +201,97 @@ button {
   gap: 5px;
   bottom: 20px;
   right: 20px;
-  z-index: 1;
+  z-index: 2;
+}
+
+
+
+/**   =============== Side Bar =============== */
+
+/** side bar fold button */
+.fold_button {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  background-color: rgb(210, 210, 210);
+  top: 50%;
+  left: 100%;
+  box-shadow: 5px 0px rgb(198, 198, 198);
+  transform: translateY(-50%);
+  width: 22px;
+  height: 6rem;
+  z-index: 2;
+}
+.fold_button:hover {
+  opacity: 0.8;
+}
+.fold-button {
+  transform: translateX(-100%);
+  animation-timing-function: ease-in-out;
+}
+
+/* sidebar show, hide class */
+.showsideBar {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  z-index: 2;
+  -webkit-animation: showSidebar 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: showSidebar 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.hideSidebar {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  z-index: 2;
+  -webkit-animation: hideSidebar 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: hideSidebar 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+
+/* sidebar show, hide Animation */
+@-webkit-keyframes hideSidebar {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+@keyframes hideSidebar {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes showSidebar {
+  0% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes showSidebar {
+  0% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
 }
 </style>
