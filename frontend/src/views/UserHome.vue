@@ -126,7 +126,7 @@
                     />
 
                     <v-text-field
-                      id="password"
+                      
                       label="password"
                       name="password"
                       v-model="password"
@@ -159,7 +159,6 @@ export default {
     name: "",
     email: "",
     password: "",
-
   }),
   props: {
     source: String,
@@ -171,9 +170,15 @@ export default {
       this.$router.push("/map");
     },
 
-    SignUp: function(e) {
+    SignUp: async function(e) {
       e.preventDefault();
-      post__signup(this.name, this.email, this.password);
+      const userData = {
+        name: this.name,
+        email: this.email,
+        pw: this.password,
+      };
+      console.log(userData);
+      post__signup(userData);
     },
 
     MarketHome: function() {
