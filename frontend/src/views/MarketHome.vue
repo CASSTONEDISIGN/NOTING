@@ -7,7 +7,7 @@
             <v-row>
               <v-col cols="12" md="8">
                 <v-card-text class="mt-12">
-                  <h1 class="text-center teal--text text--lighten-1">
+                  <h1 class="text-center pink--text text--lighten-3">
                     Sign in to Noting
                   </h1>
                   <div class="text-center mt-4">
@@ -30,7 +30,7 @@
                       name="Email"
                       prepend-icon="email"
                       type="text"
-                      color="teal lighten-1"
+                      color="pink lighten-3"
                     />
 
                     <v-text-field
@@ -39,7 +39,7 @@
                       name="password"
                       prepend-icon="lock"
                       type="password"
-                      color="teal lighten-1"
+                      color="pink lighten-3"
                     />
                   </v-form>
                   <h3 class="text-center mt-4">
@@ -47,12 +47,12 @@
                   </h3>
                 </v-card-text>
                 <div class="text-center mt-3">
-                  <v-btn rounded color="teal lighten-1" dark @click="SignIn"
+                  <v-btn rounded color="pink lighten-3" dark @click="SignIn"
                     >SIGN IN</v-btn
                   >
                 </div>
               </v-col>
-              <v-col cols="12" md="4" class="teal lighten-1">
+              <v-col cols="12" md="4" class="pink lighten-3">
                 <v-card-text class="white--text mt-12">
                   <h1 class="text-center">어서오세요!</h1>
                   <h5 class="text-center">
@@ -67,7 +67,7 @@
           </v-window-item>
           <v-window-item :value="2">
             <v-row class="fill-height">
-              <v-col cols="12" md="4" class="teal lighten-1">
+              <v-col cols="12" md="4" class="pink lighten-3">
                 <v-card-text class="white--text mt-12">
                   <h1 class="text-center">WELCOME!</h1>
                   <h5 class="text-center">
@@ -77,11 +77,14 @@
                 <div class="text-center">
                   <v-btn rounded outlined dark @click="step--">Sign in</v-btn>
                 </div>
+                <v-btn class="User_btn" rounded outlined dark @click="UserHome"
+                  >User</v-btn
+                >
               </v-col>
 
               <v-col cols="12" md="8">
                 <v-card-text class="mt-12">
-                  <h1 class="text-center teal--text text--lighten-1">
+                  <h1 class="text-center pink--text text--lighten-3">
                     Create Account
                   </h1>
                   <div class="text-center mt-4">
@@ -106,7 +109,7 @@
                       v-model="name"
                       prepend-icon="person"
                       type="text"
-                      color="teal lighten-1"
+                      color="pink lighten-3"
                     />
                     <v-text-field
                       label="email"
@@ -114,8 +117,7 @@
                       v-model="email"
                       prepend-icon="email"
                       type="text"
-                      color="teal lighten-1"
-                      :rule="[rules.cEmail]"
+                      color="pink lighten-3"
                     />
 
                     <v-text-field
@@ -125,13 +127,14 @@
                       v-model="password"
                       prepend-icon="lock"
                       type="password"
-                      color="teal lighten-1"
-                      :rule="[rules.cPassword]"
+                      color="pink lighten-3"
                     />
                   </v-form>
                 </v-card-text>
                 <div class="text-center mt-n5">
-                  <v-btn rounded color="teal lighten-1" dark @click="SignUp">SIGN UP</v-btn>
+                  <v-btn rounded color="pink lighten-3" dark @click="SignUp"
+                    >SIGN UP</v-btn
+                  >
                 </div>
               </v-col>
             </v-row>
@@ -143,22 +146,14 @@
 </template>
 
 <script>
-import { get__signin } from '../API/GET/get';
-import {post__signup} from '../API/POST/post';
+import { get__signin } from "../API/GET/get";
+import { post__signup } from "../API/POST/post";
 export default {
   data: () => ({
     step: 1,
     name: "",
     email: "",
     password: "",
-
-    emailRegex: /^[a-zA-Z.0-9]+@[a-zA-Z_0-9]+?\.[a-zA-Z]+$/,
-    passwordRegex: /^(?=.+[A-Za-z])(?=.+\d)(?=.+[@!%*#?&])[A-Za-z\d@!%*#?&]{8,16}$/,
-    rules: {
-      cEmail: v => this.emailRegex.test(v) && v.length > 1 || "유효한 이메일을 입력해주세요",
-      cPassword: v => this.passwordRegex.test(v) || "유효한 비밀번호를 입력해주세요",
-    },
-    
   }),
   props: {
     source: String,
@@ -167,14 +162,18 @@ export default {
     SignIn: function() {
       get__signin(this.email, this.password);
       // 로그인 성공 시 router push
-      this.$router.push('/map');
+      this.$router.push("/map");
     },
 
     SignUp: function(e) {
       e.preventDefault();
-      post__signup(this,name, this.email, this.password);
-    }
+      post__signup(this.name, this.email, this.password);
+    },
 
+    UserHome: function() {
+      this.$router.push("/market");
+      this.$router.replace("/");
+    },
   },
 };
 </script>
@@ -193,5 +192,11 @@ h1 {
   font-size: 3rem;
   font-family: "Alice-Regular", sans-serif !important;
   padding-bottom: 2rem;
+}
+
+.User_btn {
+  position: absolute;
+  top: 90%;
+  left: 135px;
 }
 </style>
