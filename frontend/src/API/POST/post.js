@@ -18,11 +18,19 @@ export const post__signup = async ({ name, email, pw }) => {
     console.log("정규표현식이 만족합니다.");
     try {
       const hashing_pw = hashing(pw);
-      const res = await axios.post(`/signup`, JSON.stringify({
-        name,
-        email,
-        pw: hashing_pw,
-      }));
+      const res = await axios.post(
+        `/signup`,
+        JSON.stringify({
+          name,
+          email,
+          pw: hashing_pw,
+        }),
+        {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        }
+      );
       console.log(res);
       return res;
     } catch (err) {
