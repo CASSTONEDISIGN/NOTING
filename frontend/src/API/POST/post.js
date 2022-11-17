@@ -46,3 +46,14 @@ export const post__signup = async ({ name, email, pw }) => {
     console.log(`isConfirmPassword: ${isConfirmPw}`);
   }
 };
+
+export const post__signin = async (id, pw) => {
+  try {
+    const hashing_pw = hashing(pw);
+    const res = await axios.post(`${API_URL}/signin?id=${id}&pw=${hashing_pw}`);
+    return res;
+  } catch (e) {
+    const axiosError = e;
+    return axiosError;
+  }
+};
