@@ -47,10 +47,10 @@ export const post__signup = async ({ name, email, pw }) => {
   }
 };
 
-export const post__signin = async (id, pw) => {
+export const post__signin = async (email, pw) => {
   try {
     const hashing_pw = hashing(pw);
-    const res = await axios.post(`${API_URL}/signin?id=${id}&pw=${hashing_pw}`);
+    const res = await axios.post(`${API_URL}/signin?email=${email}&pw=${hashing_pw}`);
     return res;
   } catch (e) {
     const axiosError = e;
