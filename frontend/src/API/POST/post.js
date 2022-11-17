@@ -1,5 +1,4 @@
 import axios from "axios";
-import { API_URL } from "../../env";
 import hashing from "../hashing";
 
 export const post__signup = async ({ name, email, pw }) => {
@@ -19,7 +18,7 @@ export const post__signup = async ({ name, email, pw }) => {
     console.log("정규표현식이 만족합니다.");
     try {
       const hashing_pw = hashing(pw);
-      const res = await axios.post(`${API_URL}/signup`, {
+      const res = await axios.post(`/signup`, {
         name,
         email,
         pw: hashing_pw,
