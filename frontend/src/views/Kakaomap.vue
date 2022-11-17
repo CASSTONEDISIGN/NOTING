@@ -9,6 +9,7 @@
             hide-details
             prepend-icon="mdi-magnify"
             single-line
+            
           ></v-text-field>
         </v-toolbar>
         <v-list-item>
@@ -30,6 +31,7 @@
         </button>
       </v-card>
       <!--  /Side Bar  -->
+
 
       <!-- Map Option Button -->
       <div class="zoom-button">

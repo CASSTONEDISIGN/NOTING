@@ -1,5 +1,6 @@
 import axios from "axios";
 import hashing from "../hashing";
+import { API_URL } from "../../env";
 
 export const post__signup = async ({ name, email, pw }) => {
   // regex
@@ -19,12 +20,12 @@ export const post__signup = async ({ name, email, pw }) => {
     try {
       const hashing_pw = hashing(pw);
       const res = await axios.post(
-        `/signup`,
-        JSON.stringify({
-          name,
-          email,
-          pw: hashing_pw,
-        }),
+        `${API_URL}/signup`,
+        {
+          "name": name,
+          "email": email,
+          "pw": hashing_pw,
+        },
         {
           headers: {
             "Content-Type": `application/json`,

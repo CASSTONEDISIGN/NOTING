@@ -170,15 +170,14 @@ export default {
       this.$router.push("/map");
     },
 
-    SignUp: async function(e) {
-      e.preventDefault();
+    SignUp: async function() {
+      this.$router.push("/signup");
       const userData = {
         name: this.name,
         email: this.email,
         pw: this.password,
       };
-      console.log(userData);
-      post__signup(userData);
+      await post__signup(userData);
     },
 
     MarketHome: function() {
