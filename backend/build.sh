@@ -3,7 +3,17 @@ cd ../frontend
 npm run build
 cd ../backend/src/main/resources
 
-#ln -s ../../../../frontend/dist SH
+#ln -s ../../../../frontend/dist static
+
+cd ../../../
+
+pwd
+chmod +x gradlew
+
+
+./gradlew
+./gradlew bootrun
+
 
 
 
