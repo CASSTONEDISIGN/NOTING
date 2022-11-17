@@ -174,8 +174,8 @@ export default {
         email: this.loginemail,
         pw: this.loginpassword,
       };
-  
-      await get__signin(userData);
+      console.log(userData);
+      get__signin(userData);
       // 로그인 성공 시 router push
       // this.$router.push("/map");
     },

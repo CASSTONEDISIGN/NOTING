@@ -22,25 +22,20 @@ public class UserController {
     private final UserService userService;
     private final SessionManager sessionManager;
 
-    @RequestMapping("signup")
+    @PostMapping("signup")
     public void signUp(@RequestBody UserDto userDto) throws Exception {
         userService.join(userDto);
     }
 
-    @PostMapping("/login")
-    public void login(@Validated @RequestParam String email, @RequestParam String pw, BindingResult bindingResult, HttpServletResponse response) throws Exception {
+    @GetMapping("signin")
+    public void login(@RequestParam("email") String email, @RequestParam("pw") String pw, HttpServletResponse response) throws Exception {
         UserDto userDto = new UserDto();
         userDto.setEmail(email);
         userDto.setPw(pw);
-
-        if (bindingResult.hasErrors()) {
-            System.out.println("hasError");
-        }
         Optional<User> loginMember = userService.login(userDto);
 
 
         if (loginMember.isEmpty()) {
-            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             System.out.println("Empty");
         }
 
