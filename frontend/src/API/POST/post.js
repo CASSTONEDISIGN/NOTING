@@ -22,9 +22,9 @@ export const post__signup = async ({ name, email, pw }) => {
       const res = await axios.post(
         `${API_URL}/signup`,
         {
-          "name": name,
-          "email": email,
-          "pw": hashing_pw,
+          name: name,
+          email: email,
+          pw: hashing_pw,
         },
         {
           headers: {
@@ -50,7 +50,19 @@ export const post__signup = async ({ name, email, pw }) => {
 export const post__signin = async (email, pw) => {
   try {
     const hashing_pw = hashing(pw);
-    const res = await axios.post(`${API_URL}/signin?email=${email}&pw=${hashing_pw}`);
+    const res = await axios.post(
+      `${API_URL}/signin`,
+      {
+        email: email,
+        pw: hashing_pw,
+      },
+      {
+        headers: {
+          "Content-Type": `application/json`,
+        },
+      }
+    );
+
     return res;
   } catch (e) {
     const axiosError = e;

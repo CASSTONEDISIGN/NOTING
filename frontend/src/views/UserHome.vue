@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import { get__signin } from "../API/GET/get";
+import { post__signin } from "../API/POST/post";
 import { post__signup } from "../API/POST/post";
 export default {
   data: () => ({
@@ -175,7 +175,7 @@ export default {
         pw: this.loginpassword,
       };
       console.log(userData);
-      get__signin(userData);
+      post__signin(userData);
       // 로그인 성공 시 router push
       // this.$router.push("/map");
     },
