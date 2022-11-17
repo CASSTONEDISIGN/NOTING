@@ -175,7 +175,8 @@ export default {
         pw: this.loginpassword,
       };
       console.log(userData);
-      post__signin(userData);
+      await post__signin(userData);
+      console.log("해치웠나")
       // 로그인 성공 시 router push
       // this.$router.push("/map");
     },

@@ -46,26 +46,42 @@ export const post__signup = async ({ name, email, pw }) => {
     console.log(`isConfirmPassword: ${isConfirmPw}`);
   }
 };
+export const post__signin = async ({ email, pw }) => {
+  // regex
+  // email 양식
+  const RegexEmail = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+  // 8~ 16자의 대소문자 구분, 영문자 하나 이상, 숫자 하나 이상, 특수문자 하나 이상
+  const RegexPw = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%&*?])[A-Za-z\d@!@#$%&*?]{8,16}$/;
 
-export const post__signin = async (email, pw) => {
-  try {
-    const hashing_pw = hashing(pw);
-    const res = await axios.post(
-      `${API_URL}/signin`,
-      {
-        email: email,
-        pw: hashing_pw,
-      },
-      {
-        headers: {
-          "Content-Type": `application/json`,
+  const isConfirmEmail = RegexEmail.test(email);
+  const isConfirmPw = RegexPw.test(pw);
+
+  if (isConfirmEmail && isConfirmPw) {
+    console.log("정규표현식이 만족합니다.");
+    try {
+      const hashing_pw = hashing(pw);
+      const res = await axios.post(
+        `${API_URL}/signin`,
+        {
+          email: email,
+          pw: hashing_pw,
         },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        }
+      );
+      console.log(res);
 
-    return res;
-  } catch (e) {
-    const axiosError = e;
-    return axiosError;
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
+  } else {
+    console.log("정규표현식이 만족하지 않습니다.");
+    console.log(email, pw);
+    console.log(`isConfirmEmail: ${isConfirmEmail}`);
+    console.log(`isConfirmPassword: ${isConfirmPw}`);
   }
 };
