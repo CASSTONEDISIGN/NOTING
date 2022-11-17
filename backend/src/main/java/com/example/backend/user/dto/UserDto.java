@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class UserDto {
 
     private long id;
+    private String name;
     private String email;
     private String pw;
     @Builder.Default
@@ -25,6 +26,7 @@ public class UserDto {
         return User.builder()
                 .email(email)
                 .pw(pw)
+                .name(name)
                 .createAt(createAt)
                 .build();
     }

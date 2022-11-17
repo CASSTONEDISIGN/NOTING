@@ -170,8 +170,8 @@ export default {
       this.$router.push("/map");
     },
 
-    SignUp: async function() {
-      this.$router.push("/signup");
+    SignUp: async function(e) {
+      e.preventDefault();
       const userData = {
         name: this.name,
         email: this.email,

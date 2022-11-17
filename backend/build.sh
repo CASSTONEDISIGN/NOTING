@@ -5,6 +5,7 @@ cd ../backend/src/main/resources
 
 #ln -s ../../../../frontend/dist static
 
+
 cd ../../../
 
 pwd

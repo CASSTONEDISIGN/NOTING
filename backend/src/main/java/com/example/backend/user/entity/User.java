@@ -20,6 +20,8 @@ public class User{
     private Long id;
     @Column(name="email")
     private String email;
+    @Column(name = "name")
+    private String name;
     @Column(name="pw")
     private String pw;
     @Column(name="create_at")

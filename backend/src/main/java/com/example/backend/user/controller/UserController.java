@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Controller
@@ -21,14 +22,17 @@ public class UserController {
     private final UserService userService;
     private final SessionManager sessionManager;
 
-    @PostMapping("/join")
-    public String createUser(@RequestBody UserDto userDto) throws Exception {
+    @RequestMapping("signup")
+    public void signUp(@RequestBody UserDto userDto) throws Exception {
         userService.join(userDto);
-        return "성공";
     }
 
     @PostMapping("/login")
-    public void login(@Validated @RequestBody UserDto userDto, BindingResult bindingResult, HttpServletResponse response) throws Exception {
+    public void login(@Validated @RequestParam String email, @RequestParam String pw, BindingResult bindingResult, HttpServletResponse response) throws Exception {
+        UserDto userDto = new UserDto();
+        userDto.setEmail(email);
+        userDto.setPw(pw);
+
         if (bindingResult.hasErrors()) {
             System.out.println("hasError");
         }
