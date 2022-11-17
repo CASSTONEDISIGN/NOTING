@@ -3,9 +3,7 @@ cd ../frontend
 npm run build
 cd ../backend/src/main/resources
 
-ln -s ../../../../frontend/dist ./static
-
-backend\gradlew.bat spring-boot:run
+#ln -s ../../../../frontend/dist SH
 
 
 
