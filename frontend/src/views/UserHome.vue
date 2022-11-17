@@ -31,6 +31,7 @@
                       prepend-icon="email"
                       type="text"
                       color="teal lighten-1"
+                      v-model="loginemail"
                     />
 
                     <v-text-field
@@ -40,6 +41,7 @@
                       prepend-icon="lock"
                       type="password"
                       color="teal lighten-1"
+                      v-model="loginpassword"
                     />
                   </v-form>
                   <h3 class="text-center mt-4">
@@ -159,6 +161,8 @@ export default {
     name: "",
     email: "",
     password: "",
+    loginemail: "",
+    loginpassword: "",
   }),
   props: {
     source: String,
@@ -167,9 +171,10 @@ export default {
     SignIn: async function() {
       console.log('로그인 버튼 클릭');
       const userData = {
-        email: this.email,
-        pw: this.password,
+        email: this.loginemail,
+        pw: this.loginpassword,
       };
+  
       await post__signin(userData);
       // 로그인 성공 시 router push
       // this.$router.push("/map");
