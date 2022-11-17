@@ -164,13 +164,8 @@ export default {
     source: String,
   },
   methods: {
-    SignIn: async function() {
-      console.log('로그인 버튼 클릭');
-      const userData = {
-        email: this.email,
-        pw: this.password,
-      };
-      await post__signin(userData);
+    SignIn: function() {
+      post__signin(this.email, this.password);
       // 로그인 성공 시 router push
       // this.$router.push("/map");
     },
