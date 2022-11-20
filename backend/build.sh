@@ -3,7 +3,7 @@ cd ../frontend
 npm run build
 cd ../backend/src/main/resources
 
-#ln -s ../../../../frontend/dist static
+ln -s ../../../../frontend/dist static
 
 
 cd ../../../
