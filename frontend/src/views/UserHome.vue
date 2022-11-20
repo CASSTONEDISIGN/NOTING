@@ -27,7 +27,7 @@
                   <v-form>
                     <v-text-field
                       label="Email"
-                      name="Email"
+                      name="loginEmail"
                       prepend-icon="email"
                       type="text"
                       color="teal lighten-1"
@@ -35,9 +35,9 @@
                     />
 
                     <v-text-field
-                      id="password"
+                      id="loginpassword"
                       label="Password"
-                      name="password"
+                      name="loginpassword"
                       prepend-icon="lock"
                       type="password"
                       color="teal lighten-1"
@@ -168,14 +168,15 @@ export default {
     source: String,
   },
   methods: {
-    SignIn: async function() {
+    SignIn: async function(e) {
+      e.preventDefault();
       console.log('로그인 버튼 클릭');
-      const userData = {
+      const userloginData = {
         email: this.loginemail,
         pw: this.loginpassword,
       };
-      console.log(userData);
-      await post__signin(userData);
+      console.log(userloginData);
+      await post__signin(userloginData);
       console.log("해치웠나")
       // 로그인 성공 시 router push
       // this.$router.push("/map");
