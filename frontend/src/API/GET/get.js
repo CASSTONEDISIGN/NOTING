@@ -8,7 +8,6 @@ export const get__signin = async (email, pw) => {
       const res = await axios.get(`${API_URL}/signin?email=${email}&pw=${hashing_pw}`);
       return res;
     } catch (e) {
-      const axiosError = e;
-      return axiosError;
+      return e;
     }
   };

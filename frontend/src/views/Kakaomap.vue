@@ -1,37 +1,76 @@
 <template>
   <div>
     <div id="map">
-
       <!-- Side Bar -->
-      <v-card :class="isOpen ? 'showsideBar' : 'hideSidebar'">
-        <v-toolbar dense floating>
-          <v-text-field
-            hide-details
-            prepend-icon="mdi-magnify"
-            single-line
-            
-          ></v-text-field>
-        </v-toolbar>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title class="text-h6">
-              Application
-            </v-list-item-title>
-            <v-list-item-title class="text-h6">
-              Application
-            </v-list-item-title>
-            <v-list-item-title class="text-h6">
-              Application
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+      <v-card class="sidebar">
+        <!-- 로그인한 유저 정보 -->
+        <v-list class="userInfo">
+          <v-list-item id="profile">
+            <v-list-item-avatar>
+              <v-img
+                src="https://randomuser.me/api/portraits/women/85.jpg"
+              ></v-img>
+            </v-list-item-avatar>
 
-        <button class="fold_button" @click="toggleFold()">
-          <v-icon>mdi-menu-left</v-icon>
-        </button>
+            <v-list-item-content>
+              <v-list-item-title> Sandra Adams </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item link class="infoOption">
+            <v-icon>mdi-magnify</v-icon>
+            검색
+          </v-list-item>
+
+          <v-list-item link class="infoOption">
+            <v-icon>mdi-star</v-icon>
+            즐겨찾기
+          </v-list-item>
+
+          <v-list-item link class="infoOption">
+            <v-icon>mdi-comment-multiple-outline</v-icon>
+            채팅방
+          </v-list-item>
+          <v-list-item link class="infoOption">
+            <v-icon>mdi-bell-ring-outline</v-icon>
+            알림
+          </v-list-item>
+
+          <v-list-item link class="infoOption">
+            <v-icon>mdi-view-headline</v-icon>
+            더보기
+          </v-list-item>
+        </v-list>
+
+        <!-- 맵 중앙을 중심으로 가게 정보 표기-->
+        <v-card :class="isOpen ? 'showSidebar' : 'hideSidebar'">
+          <v-toolbar dense floating>
+            <v-text-field
+              hide-details
+              prepend-icon="mdi-magnify"
+              single-line
+            ></v-text-field>
+          </v-toolbar>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="text-h6">
+                Application
+              </v-list-item-title>
+              <v-list-item-title class="text-h6">
+                Application
+              </v-list-item-title>
+              <v-list-item-title class="text-h6">
+                Application
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <button class="fold_button" @click="toggleFold()">
+            <v-icon>mdi-menu-left</v-icon>
+          </button>
+        </v-card>
       </v-card>
-      <!--  /Side Bar  -->
 
+      <!--  /Side Bar  -->
 
       <!-- Map Option Button -->
       <div class="zoom-button">
@@ -206,19 +245,44 @@ v-btn {
   z-index: 2;
 }
 
-
-
 /**   =============== Side Bar =============== */
 
+.sidebar {
+  position: relative;
+  height: 100vh;
+  display: flex;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  align-items: center;
+  z-index: 3;
+  border-right: 2px rgb(6, 181, 181) solid;
+}
+#profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.infoOption {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  min-width: 96px;
+  align-items: center;
+}
 /** side bar fold button */
 .fold_button {
   position: absolute;
   display: flex;
   align-items: center;
-  background-color: rgb(210, 210, 210);
+  background-color: rgb(126, 195, 65);
   top: 50%;
   left: 100%;
-  box-shadow: 5px 0px rgb(198, 198, 198);
+  box-shadow: 5px 0px rgb(239, 239, 101);
   transform: translateY(-50%);
   width: 22px;
   height: 6rem;
@@ -227,33 +291,26 @@ v-btn {
 .fold_button:hover {
   opacity: 0.8;
 }
-.fold-button {
-  transform: translateX(-100%);
-  animation-timing-function: ease-in-out;
-}
 
 /* sidebar show, hide class */
-.showsideBar {
-  position: absolute;
-  top: 0;
+.showSidebar {
+  position: relative;
+  width: 300px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   z-index: 2;
   -webkit-animation: showSidebar 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: showSidebar 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 .hideSidebar {
-  position: absolute;
-  top: 0;
+  position: relative;
+  width: fit-content;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   z-index: 2;
   -webkit-animation: hideSidebar 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: hideSidebar 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
-
 
 /* sidebar show, hide Animation */
 @-webkit-keyframes hideSidebar {
