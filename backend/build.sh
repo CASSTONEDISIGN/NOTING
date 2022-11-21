@@ -6,8 +6,8 @@ npm run build
 echo SETTING SYMBOLIC LINK FOR STATIC FRONTEND PAGES...
 
 cd ../backend/src/main/resources
-echo.
-ln -tfs ../../../../frontend/dist static
+
+#ln -s ../../../../frontend/dist static
 
 echo BOOTSTRAPPING SPRINGBOOT SERVER...
 cd ../../../

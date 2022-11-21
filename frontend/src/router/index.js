@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import UserHome from '../views/UserHome.vue'
 import MarketHome from '../views/MarketHome.vue'
-import Map from '../views/Kakaomap.vue'
+import Map from '../views/Kakaomap'
 
 Vue.use(VueRouter)
 

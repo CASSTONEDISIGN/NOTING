@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TestController {
     @GetMapping("")
     public String getTest(){
-        return "resources/static/index.html";
+        return "build/resources/main/static/index.html";
     }
 }

@@ -61,18 +61,20 @@ export const post__signin = async ({ email, pw }) => {
     try {
       const hashing_pw = hashing(pw);
       const res = await axios.post(
-        `${API_URL}/signin`,
-        {
-          email: email,
-          pw: hashing_pw,
-        },
-        {
-          headers: {
-            "Content-Type": `application/json`,
+          `${API_URL}/signin`,
+          {
+            email: email,
+            pw: hashing_pw,
           },
-        }
+          {
+            headers: {
+              "Content-Type": `application/json`,
+            },
+          }
       );
       console.log(res);
+
+
 
       return res;
     } catch (err) {
@@ -84,4 +86,4 @@ export const post__signin = async ({ email, pw }) => {
     console.log(`isConfirmEmail: ${isConfirmEmail}`);
     console.log(`isConfirmPassword: ${isConfirmPw}`);
   }
-};
+}

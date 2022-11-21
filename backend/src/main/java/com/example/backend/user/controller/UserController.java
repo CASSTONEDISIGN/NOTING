@@ -5,6 +5,8 @@ import com.example.backend.user.entity.User;
 import com.example.backend.user.service.UserService;
 import com.example.backend.user.session.SessionManager;
 import lombok.RequiredArgsConstructor;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -15,32 +17,32 @@ import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
     private final SessionManager sessionManager;
 
-    @PostMapping("signup")
+    @PostMapping("/signup")
     public void signUp(@RequestBody UserDto userDto) throws Exception {
         userService.join(userDto);
     }
 
-    @GetMapping("signin")
-    public void login(@RequestParam("email") String email, @RequestParam("pw") String pw, HttpServletResponse response) throws Exception {
-        UserDto userDto = new UserDto();
-        userDto.setEmail(email);
-        userDto.setPw(pw);
-        Optional<User> loginMember = userService.login(userDto);
 
+    @PostMapping("/signin")
+    @ResponseBody
+    public Optional<User> signin(@RequestBody UserDto userDto) throws Exception {
+        Optional<User> loginMember = userService.login(userDto);
 
         if (loginMember.isEmpty()) {
             System.out.println("Empty");
         }
 
-        sessionManager.createSession(loginMember, response);
+
         System.out.println("성공");
+
+        return loginMember;
     }
 
     @PostMapping("logout")

@@ -177,9 +177,8 @@ export default {
       };
       console.log(userloginData);
       await post__signin(userloginData);
-      console.log("해치웠나")
-      // 로그인 성공 시 router push
-      // this.$router.push("/map");
+
+      // await this.$router.push("/map");
     },
 
     SignUp: async function(e) {
@@ -193,7 +192,7 @@ export default {
     },
 
     MarketHome: function() {
-      this.$router.push("/market");
+      // this.$router.push("/market");
     },
   },
 };
