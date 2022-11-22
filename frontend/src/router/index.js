@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import UserHome from '../views/UserHome.vue'
 import MarketHome from '../views/MarketHome.vue'
 import Map from '../views/Kakaomap'
+import Chat from '../views/Chat.vue'
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,12 @@ const routes = [
     path: '/map',
     name: 'map',
     component: Map
-  }
+  },
+  {
+    path: '/chat',
+    name: 'chat',
+    component: Chat
+  },
 ]
 
 const router = new VueRouter({

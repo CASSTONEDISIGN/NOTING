@@ -21,9 +21,7 @@
                       <v-icon>fab fa-kaggle</v-icon>
                     </v-btn>
                   </div>
-                  <h4 class="text-center mt-4">
-                    다른 소셜 계정으로 계속하기
-                  </h4>
+                  <h4 class="text-center mt-4">다른 소셜 계정으로 계속하기</h4>
                   <v-form>
                     <v-text-field
                       label="Email"
@@ -44,9 +42,7 @@
                       v-model="loginpassword"
                     />
                   </v-form>
-                  <h3 class="text-center mt-4">
-                    비밀번호를 잊으셨나요 ?
-                  </h3>
+                  <h3 class="text-center mt-4">비밀번호를 잊으셨나요 ?</h3>
                 </v-card-text>
                 <div class="text-center mt-3">
                   <v-btn rounded color="teal lighten-1" dark @click="SignIn"
@@ -72,9 +68,7 @@
               <v-col cols="12" md="4" class="teal lighten-1">
                 <v-card-text class="white--text mt-12">
                   <h1 class="text-center">WELCOME!</h1>
-                  <h5 class="text-center">
-                    계속하시려면 정보를 입력해주세요
-                  </h5>
+                  <h5 class="text-center">계속하시려면 정보를 입력해주세요</h5>
                 </v-card-text>
                 <div class="text-center">
                   <v-btn rounded outlined dark @click="step--">Sign in</v-btn>
@@ -106,9 +100,7 @@
                       <v-icon>fab fa-kaggle</v-icon>
                     </v-btn>
                   </div>
-                  <h4 class="text-center mt-4">
-                    다른 소셜 계정으로 계속하기
-                  </h4>
+                  <h4 class="text-center mt-4">다른 소셜 계정으로 계속하기</h4>
                   <v-form>
                     <v-text-field
                       label="name"
@@ -128,7 +120,6 @@
                     />
 
                     <v-text-field
-                      
                       label="password"
                       name="password"
                       v-model="password"
@@ -155,6 +146,8 @@
 <script>
 import { post__signin } from "../API/POST/post";
 import { post__signup } from "../API/POST/post";
+import store from "../Store/store";
+
 export default {
   data: () => ({
     step: 1,
@@ -163,25 +156,30 @@ export default {
     password: "",
     loginemail: "",
     loginpassword: "",
+    store: store,
   }),
   props: {
     source: String,
   },
   methods: {
-    SignIn: async function(e) {
+    SignIn: async function (e) {
       e.preventDefault();
-      console.log('로그인 버튼 클릭');
       const userloginData = {
         email: this.loginemail,
         pw: this.loginpassword,
       };
-      console.log(userloginData);
-      await post__signin(userloginData);
 
-      // await this.$router.push("/map");
+      await post__signin(userloginData);
+      const loginstate = this.store.state.account.id;
+      if (loginstate !== 0) {
+        this.$router.push("/map");
+      }
+      else{
+        window.alert("로그인 정보가 존재하지 않습니다..");
+      }
     },
 
-    SignUp: async function(e) {
+    SignUp: async function (e) {
       e.preventDefault();
       const userData = {
         name: this.name,
@@ -191,7 +189,7 @@ export default {
       await post__signup(userData);
     },
 
-    MarketHome: function() {
+    MarketHome: function () {
       // this.$router.push("/market");
     },
   },

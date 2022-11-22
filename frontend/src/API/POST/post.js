@@ -1,6 +1,7 @@
 import axios from "axios";
 import hashing from "../hashing";
 import { API_URL } from "../../env";
+import store from "../../Store/store";
 
 export const post__signup = async ({ name, email, pw }) => {
   // regex
@@ -72,17 +73,17 @@ export const post__signin = async ({ email, pw }) => {
             },
           }
       );
+      // 로그인 성공
       console.log(res);
-
-
-
+      store.commit('setAccount', res.data);
+      sessionStorage.setItem("id", res.data)
+      
       return res;
     } catch (err) {
-      console.error(err);
+      window.alert("요청한 페이지를 찾을 수 없습니다.");
     }
   } else {
     console.log("정규표현식이 만족하지 않습니다.");
-    console.log(email, pw);
     console.log(`isConfirmEmail: ${isConfirmEmail}`);
     console.log(`isConfirmPassword: ${isConfirmPw}`);
   }

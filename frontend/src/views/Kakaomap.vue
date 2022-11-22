@@ -5,16 +5,13 @@
       <v-card class="sidebar">
         <!-- 로그인한 유저 정보 -->
         <v-list class="userInfo">
-          <v-list-item id="profile">
-            <v-list-item-avatar>
-              <v-img
-                src="https://randomuser.me/api/portraits/women/85.jpg"
-              ></v-img>
-            </v-list-item-avatar>
+          <v-list-item class="profile">
+            <v-img
+              max-width="80px"
+              src="https://randomuser.me/api/portraits/women/85.jpg"
+            ></v-img>
 
-            <v-list-item-content>
-              <v-list-item-title> Sandra Adams </v-list-item-title>
-            </v-list-item-content>
+            <v-list-item> Dr. Mine Dopamin</v-list-item>
           </v-list-item>
 
           <v-list-item link class="infoOption">
@@ -44,10 +41,10 @@
 
         <!-- 맵 중앙을 중심으로 가게 정보 표기-->
         <v-card :class="isOpen ? 'showSidebar' : 'hideSidebar'">
-          <v-toolbar dense floating>
+          <v-toolbar dense>
             <v-text-field
               hide-details
-              prepend-icon="mdi-magnify"
+              prepend-icon="search"
               single-line
             ></v-text-field>
           </v-toolbar>
@@ -96,7 +93,6 @@
 
 <script>
 export default {
-  name: "KakaoMap",
   data() {
     return {
       markerPositions1: [
@@ -135,7 +131,7 @@ export default {
       const container = document.getElementById("map");
       const options = {
         // 최초 위치
-        center: new kakao.maps.LatLng(37.9698032, 127.8721668),
+        center: new kakao.maps.LatLng(36.967257621809, 127.87179754134),
         level: 5,
       };
 
@@ -158,7 +154,7 @@ export default {
           const longitude = position.coords.longitude;
           const latlong = new kakao.maps.LatLng(latitude, longitude);
           this.map.panTo(latlong);
-          this.map.setLevel(1);
+          this.map.setLevel(2);
         });
       } else {
         alert("현재 위치를 불러오지 못했습니다.");
@@ -246,7 +242,6 @@ v-btn {
 }
 
 /**   =============== Side Bar =============== */
-
 .sidebar {
   position: relative;
   height: 100vh;
@@ -258,10 +253,11 @@ v-btn {
   flex-direction: column;
   width: 100px;
   align-items: center;
+  justify-content: center;
   z-index: 3;
   border-right: 2px rgb(6, 181, 181) solid;
 }
-#profile {
+.profile {
   display: flex;
   flex-direction: column;
 }
@@ -270,10 +266,13 @@ v-btn {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-top: 2px solid rgb(75, 169, 169);
+  padding-top: 50px;
   margin: 0;
   min-width: 96px;
   align-items: center;
 }
+
 /** side bar fold button */
 .fold_button {
   position: absolute;
