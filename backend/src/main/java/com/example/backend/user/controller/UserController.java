@@ -26,21 +26,23 @@ public class UserController {
 
     @PostMapping("/signup")
     public void signUp(@RequestBody UserDto userDto) throws Exception {
+        System.out.println("userDto.toString() = " + userDto.toString());
         userService.join(userDto);
+
     }
-
-
     @PostMapping("/signin")
     @ResponseBody
     public Optional<User> signin(@RequestBody UserDto userDto) throws Exception {
+        System.out.println("userDto.toString() = " + userDto.toString());
+
         Optional<User> loginMember = userService.login(userDto);
+        System.out.println("userDto.toString() = " + userDto.toString());
 
         if (loginMember.isEmpty()) {
             System.out.println("Empty");
         }
-
-
-        System.out.println("성공");
+        else
+            System.out.println("성공");
 
         return loginMember;
     }

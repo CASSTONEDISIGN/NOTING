@@ -29,7 +29,7 @@ public class UserServiceTest {
     public void 회원가입() throws Exception {
         UserDto userdto = UserDto.builder()
                 .email("spring@gmail.com")
-                .pw("spring")
+                .pw("43b18f766ed1ab354fda1b6288e408d9a2292265fee1ef324b5ba86d9ea08315")
                 .build();
 
         User result = userService.join(userdto);
@@ -42,7 +42,7 @@ public class UserServiceTest {
     public void 중복회원() throws Exception {
         UserDto userDto1 = UserDto.builder()
                 .email("spring@gmail.com")
-                .pw("spring").build();
+                .pw("43b18f766ed1ab354fda1b6288e408d9a2292265fee1ef324b5ba86d9ea08315").build();
 
         userService.join(userDto1);
 
@@ -59,11 +59,11 @@ public class UserServiceTest {
     public void 로그인() throws Exception {
         UserDto userDto = UserDto.builder()
                 .email("spring@gmail.com")
-                .pw("spring").build();
+                .pw("43b18f766ed1ab354fda1b6288e408d9a2292265fee1ef324b5ba86d9ea08315").build();
 
         Optional<User> result = userService.login(userDto);
 
-        System.out.println(result.get().getPw());
+        System.out.println(result.get().toString());
         assertThat(userDto.getEmail()).isEqualTo(result.get().getEmail());
     }
 
