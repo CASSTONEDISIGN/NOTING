@@ -5,13 +5,15 @@ const store = createStore({
   state() {
     return {
       account: {
-        id: 0,
+        id: null,
+        name: "허강민",
       }
     };
   },
   mutations: {
     setAccount(state, payload){
-      state.account.id = payload;
+      state.account.id = payload.id;
+      state.account.name = payload.name;
     }
   },
 });

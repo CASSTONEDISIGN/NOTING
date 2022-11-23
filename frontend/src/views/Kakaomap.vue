@@ -8,10 +8,12 @@
           <v-list-item class="profile">
             <v-img
               max-width="80px"
-              src="https://randomuser.me/api/portraits/women/85.jpg"
+              src="https://randomuser.me/api/portraits/men/39.jpg"
             ></v-img>
 
-            <v-list-item> Dr. Mine Dopamin</v-list-item>
+            <v-list-item class="name">
+              {{ store.state.account.name }}
+            </v-list-item>
           </v-list-item>
 
           <v-list-item link class="infoOption">
@@ -92,9 +94,12 @@
 </template>
 
 <script>
+import store from "../Store/store";
+
 export default {
   data() {
     return {
+      store: store,
       markerPositions1: [
         [33.452278, 126.567803],
         [33.452671, 126.574792],
@@ -261,7 +266,9 @@ v-btn {
   display: flex;
   flex-direction: column;
 }
-
+.name{
+  padding-bottom: 10px;
+}
 .infoOption {
   display: flex;
   flex-direction: column;

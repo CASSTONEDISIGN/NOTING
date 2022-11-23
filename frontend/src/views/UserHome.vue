@@ -171,7 +171,7 @@ export default {
 
       await post__signin(userloginData);
       const loginstate = this.store.state.account.id;
-      if (loginstate !== 0) {
+      if (loginstate !== null) {
         this.$router.push("/map");
       }
       else{
@@ -187,10 +187,11 @@ export default {
         pw: this.password,
       };
       await post__signup(userData);
+      this.step--
     },
 
     MarketHome: function () {
-      // this.$router.push("/market");
+      this.$router.push("/market");
     },
   },
 };
