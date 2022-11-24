@@ -1,5 +1,6 @@
 package com.example.backend.wait.entity;
 
+import com.example.backend.map.entity.Store;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "wait")
 @Getter
@@ -18,7 +20,11 @@ import javax.persistence.*;
 public class WaitEntity {
     @Id
     private long  id;
-    private String phone;
+
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store_id;
+    private String user_phone;
     private String name;
     private String male;
     private String nop;
