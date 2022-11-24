@@ -33,7 +33,7 @@ export const post__signup = async ({ name, email, pw }) => {
           },
         }
       );
-      console.log(res);
+
 
       return res;
     } catch (err) {

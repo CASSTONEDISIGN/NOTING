@@ -1,48 +1,27 @@
 package com.example.backend.map.controller;
 
-import com.example.backend.map.dto.KakaoMapProperty;
 import com.example.backend.map.service.KakaoMapService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
 
 @RestController
-@RequestMapping("api")
 @RequiredArgsConstructor
 @Slf4j
 public class KakaoMapController {
 
     private final KakaoMapService kakaoMapService;
-    private final KakaoMapProperty property = new KakaoMapProperty();
 
-//    옵션 1. 속성 변경과 api 요청을 분리
-//    @GetMapping("/x-y-radius")
-//    public void getXYRadius(@RequestParam(required = false) String x, @RequestParam(required = false) String y, @RequestParam(required = false) Integer radius){
-//
-//        if(x != null) kakaoMapDto.setX(x);
-//        if(y != null) kakaoMapDto.setY(y);
-//        if(radius != null) kakaoMapDto.setRadius(radius);
-//
-//        log.info(String.format("x = %s y= %s radius= %d", x, y, radius));
-//    }
-//
-//    @GetMapping("/storeInfo")
-//    public Map StoreInfo() {
-//        return  kakaoMapService.getStoreInfo(kakaoMapDto);
-//    }
+    @GetMapping("/category")
+    public void kakaoMap(@RequestParam String x, @RequestParam String y) {
 
-//  옵션 2. 속성 변경과 api 요청을 통합
-    @GetMapping("/store-info")
-    public Map StoreInfo(@RequestParam(required = false) String x, @RequestParam(required = false) String y, @RequestParam(required = false) int radius) {
+        // 교통대 127.87179754134 36.967257621809
+        // 터미널 127.9150263161 36.981136495916
+        // 임피리얼 팰리스 서울 127.035902 37.514132
 
-        if(x != null) property.setX(x);
-        if(y != null) property.setY(y);
-        if((Object) radius != null) property.setRadius(radius);
-
-        log.info(String.format("x = %s y= %s radius= %d", x, y, radius));
-
-        return  kakaoMapService.getStoreInfo(property);
+        kakaoMapService.getStoreByCategory(x, y);
     }
 }
