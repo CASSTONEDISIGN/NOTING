@@ -175,7 +175,6 @@ export default {
       }
       else{
         e.preventDefault();
-        window.alert("로그인 정보가 존재하지 않습니다..");
       }
     },
 

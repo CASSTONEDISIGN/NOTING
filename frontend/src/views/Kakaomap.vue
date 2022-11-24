@@ -48,18 +48,17 @@
               hide-details
               prepend-icon="search"
               single-line
+              @keyup.enter="searchPlace"
             ></v-text-field>
           </v-toolbar>
           <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title class="text-h6">
-                Application
-              </v-list-item-title>
-              <v-list-item-title class="text-h6">
-                Application
-              </v-list-item-title>
-              <v-list-item-title class="text-h6">
-                Application
+            <v-list-item-content
+              v-for="rs in search.results"
+              :key="rs.id"
+              class="place_list"
+            >
+              <v-list-item-title class="text-h2">
+                {{ rs.place_name }}
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -72,30 +71,37 @@
       <!--  /Side Bar  -->
 
       <!-- Map Option Button -->
+      <div class="searchPlaceNow">
+        <button @click="searchPlaceNow">
+          <v-icon color="white" x-large>mdi-reload</v-icon>
+          현위치에서 다시 검색
+        </button>
+      </div>
       <div class="zoom-button">
-        <v-btn @click="currentPos">
-          <v-icon>mdi-crosshairs-gps</v-icon>
-        </v-btn>
-        <v-btn @click="zoomIn">
-          <v-icon>fa-plus</v-icon>
-        </v-btn>
-        <v-btn @click="zoomOut">
-          <v-icon>fa-minus</v-icon>
-        </v-btn>
+        <button @click="currentPos" class="controll_btn">
+          <v-icon color="white" x-large>mdi-crosshairs-gps</v-icon>
+        </button>
+        <button @click="zoomIn" class="controll_btn">
+          <v-icon color="white" x-large>fa-plus</v-icon>
+        </button>
+        <button @click="zoomOut" class="controll_btn">
+          <v-icon color="white" x-large>fa-minus</v-icon>
+        </button>
       </div>
     </div>
-    <!-- <div class="button-group">
-        <button @click="displayMarker(markerPositions1)">marker set 1</button>
-        <button @click="displayMarker(markerPositions2)">marker set 2</button>
-        <button @click="displayMarker([])">marker set 3 (empty)</button>
-        <button @click="displayInfoWindow">infowindow</button>
-      </div> -->
+    <div class="button-group">
+      <button @click="displayMarker(markerPositions1)">marker set 1</button>
+      <button @click="displayMarker(markerPositions2)">marker set 2</button>
+      <button @click="displayMarker([])">marker set 3 (empty)</button>
+      <button @click="displayInfoWindow">infowindow</button>
+    </div>
   </div>
 </template>
 
 <script>
 import store from "../Store/store";
-
+import get__place from "../API/GET/get";
+import get__place__name from "../API/GET/get";
 export default {
   data() {
     return {
@@ -117,6 +123,11 @@ export default {
       markers: [],
       infowindow: null,
       isOpen: true,
+      search: {
+        keyword: null,
+        pgn: null,
+        results: [{ id: 0, place_name: "여긴어디" }],
+      },
     };
   },
   mounted() {
@@ -169,6 +180,27 @@ export default {
       this.isOpen = !this.isOpen;
       console.log(this.isOpen);
     },
+    searchPlace(e) {
+      const keyword = e.target.value.trim();
+      // 빈칸이면 반환 없음
+      if (keyword.length === 0) {
+        return;
+      }
+      get__place(this.map.getLevel(), keyword);
+
+      // ps는 data, status, pgn의 정보를 받아옴
+      // ps.keywordSearch(keyword, (data, status, pgn) => {
+      //   this.search.keyword = keyword;
+      //   this.search.pgn = pgn;
+      //   this.search.results = data;
+      // })
+    },
+
+    searchPlaceNow() {
+      let latlng = this.map.getCenter();
+      get__place__name(this.map.getLevel(), latlng.getLat(), latlng.getLng());
+    },
+    // [위도, 경도] 로 이루어진 배열들의 모음
     displayMarker(markerPositions) {
       if (this.markers.length > 0) {
         this.markers.forEach((marker) => marker.setMap(null));
@@ -195,6 +227,8 @@ export default {
         this.map.setBounds(bounds);
       }
     },
+
+    // Click Marker로 변경, marker를 클릭 시 인포윈도우를 띄움
     displayInfoWindow() {
       if (this.infowindow && this.infowindow.getMap()) {
         //이미 생성한 인포윈도우가 있기 때문에 지도 중심좌표를 인포윈도우 좌표로 이동시킨다.
@@ -202,7 +236,7 @@ export default {
         return;
       }
 
-      var iwContent = '<div style="padding:5px;">Hello World!</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+      let iwContent = '<div style="padding:5px;">Hello World!</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
         iwPosition = new kakao.maps.LatLng(33.450701, 126.570667), //인포윈도우 표시 위치입니다
         iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
@@ -227,13 +261,22 @@ export default {
 }
 
 .button-group {
-  margin: 10px 0px;
+  position: absolute;
+  z-index: 3;
+  top: 30px;
 }
 
-v-btn {
+.controll_btn {
   padding: 9px;
   min-width: fit-content;
-  height: 32px;
+  background: #b2dfdb;
+  height: 65px;
+  width: 65px;
+  border-radius: 15px;
+}
+.controll_btn:hover {
+  color: rgb(255, 255, 255);
+  background: #00635b;
 }
 
 .zoom-button {
@@ -246,6 +289,25 @@ v-btn {
   z-index: 2;
 }
 
+.searchPlaceNow {
+  position: absolute;
+  height: 55px;
+  padding: 0 18px;
+  border-radius: 23px;
+  background: #b2dfdb;
+  box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%);
+  color: rgb(66, 66, 66);
+  white-space: nowrap;
+  font-size: x-large;
+  bottom: 20px;
+  padding-top: 10px;
+  left: 50%;
+  z-index: 3;
+}
+.searchPlaceNow:hover {
+  color: rgb(255, 255, 255);
+  background: #00635b;
+}
 /**   =============== Side Bar =============== */
 .sidebar {
   position: relative;
@@ -259,6 +321,7 @@ v-btn {
   width: 100px;
   align-items: center;
   justify-content: center;
+  padding-bottom: 0;
   z-index: 3;
   border-right: 2px rgb(6, 181, 181) solid;
 }
@@ -266,7 +329,7 @@ v-btn {
   display: flex;
   flex-direction: column;
 }
-.name{
+.name {
   padding-bottom: 10px;
 }
 .infoOption {
@@ -274,10 +337,15 @@ v-btn {
   flex-direction: column;
   justify-content: center;
   border-top: 2px solid rgb(75, 169, 169);
+  background-color: #e1ebf6;
   padding-top: 50px;
   margin: 0;
   min-width: 96px;
   align-items: center;
+}
+.place_list {
+  display: flex;
+  flex-direction: column;
 }
 
 /** side bar fold button */
@@ -285,10 +353,10 @@ v-btn {
   position: absolute;
   display: flex;
   align-items: center;
-  background-color: rgb(126, 195, 65);
+  background-color: #b2dfdb;
   top: 50%;
   left: 100%;
-  box-shadow: 5px 0px rgb(239, 239, 101);
+  box-shadow: 5px 0px rgb(255, 255, 255);
   transform: translateY(-50%);
   width: 22px;
   height: 6rem;
@@ -296,12 +364,13 @@ v-btn {
 }
 .fold_button:hover {
   opacity: 0.8;
+  background: #00635b;
 }
 
 /* sidebar show, hide class */
 .showSidebar {
   position: relative;
-  width: 300px;
+  width: 500px;
   display: flex;
   flex-direction: column;
   z-index: 2;
