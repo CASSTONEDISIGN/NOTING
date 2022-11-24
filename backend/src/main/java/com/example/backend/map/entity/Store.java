@@ -1,27 +1,30 @@
 package com.example.backend.map.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "store")
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Component
 public class Store {
 
     @Id
-    String id;
-    String placeName;
-    String distance;
-    String addressName;
-    String roadAddressName;
-    String phone;
-    String x;   // 위도
-    String y;   // 경도
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
+    @Column(name = "place_name")
+    private String placeName;
+    private String distance;
+    private String addressName;
+    private String roadAddressName;
+    private String phone;
+    private String x;   // 경도
+    private String y;   // 위도
 }
+

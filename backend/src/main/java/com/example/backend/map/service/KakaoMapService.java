@@ -32,13 +32,13 @@ public class KakaoMapService {
     private final String url = "https://dapi.kakao.com";     // 기본 url
     private final String CATEGORY_GROUP_CODE = "FD6";        // 음식점
     private final KakaoMapRepository kakaoMapRepository;
-    private final Store store;
 
     public void getStoreByCategory(String x, String y){
         URI targetUrl;                  // 요청 url
         ResponseEntity<Map> result;     // 응답 정보
         JSONObject jsonObj;             // 응답 정보를 json으로 변환
         JSONArray documents;            // 가게 정보를 json 배열로 변환
+        Store store;
         int maxPage = 1;                // 최대 가져올 수 있는 페이지 수
 
         RestTemplate restTemplate = new RestTemplate();
@@ -67,7 +67,7 @@ public class KakaoMapService {
             // 받은 객체를 json으로 변환
             jsonObj = new JSONObject(result.getBody());
             // 메타 정보에서 최대 페이지 수를 할당
-            maxPage = jsonObj.getJSONObject("meta").getInt("pageable_count");
+            maxPage = jsonObj.getJSONObject("meta").getInt("pageable_count") / 15;
             // 가게 정보(Array)를 jsonArray로 할당
             documents = jsonObj.getJSONArray("documents");
 
@@ -76,17 +76,17 @@ public class KakaoMapService {
                 JSONObject obj = documents.getJSONObject(i);
 
                 // db 내에 이미 정보가 있으면 스킵
-                if(kakaoMapRepository.findById(obj.getString("id")).isPresent())
+                if(kakaoMapRepository.findByName(obj.getString("place_name")).isPresent())
                     continue;
 
-                store.setId(obj.getString("id"));
-                store.setPlaceName(obj.getString("place_name"));
-                store.setDistance(obj.getString("distance"));
-                store.setAddressName(obj.getString("address_name"));
-                store.setRoadAddressName(obj.getString("road_address_name"));
-                store.setPhone(obj.getString("phone"));
-                store.setX(obj.getString("x"));
-                store.setY(obj.getString("y"));
+                store = Store.builder()
+                        .addressName(obj.getString("road_address_name"))
+                        .roadAddressName(obj.getString("address_name"))
+                        .distance(obj.getString("distance"))
+                        .phone(obj.getString("phone"))
+                        .placeName(obj.getString("place_name"))
+                        .x(obj.getString("x"))
+                        .y(obj.getString("y")).build();
 
                 kakaoMapRepository.save(store);
             }

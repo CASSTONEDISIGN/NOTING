@@ -19,13 +19,23 @@ public class JpaKakaoMapRepository implements KakaoMapRepository  {
     private final EntityManager em;
 
     @Override
-    public Optional<Store> findById(String id) {
-        List<Store> result = em.createQuery("select s from store s where s.id = :id", Store.class)
-                .setParameter("id", id)
+    public Optional<Store> findBylikeName(String place_name) {
+        List<Store> result = em.createQuery("select s from store s where s.placeName like :place_name", Store.class)
+                .setParameter("place_name","%" + place_name + "%")
                 .getResultList();
 
         return result.stream().findAny();
     }
+
+    @Override
+    public Optional<Store> findByName(String place_name) {
+        List<Store> result = em.createQuery("select s from store s where s.placeName = :place_name", Store.class)
+                .setParameter("place_name",place_name)
+                .getResultList();
+
+        return result.stream().findAny();
+    }
+
 
     @Override
     public Store save(Store store) {
