@@ -29,6 +29,7 @@ dependencies {
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'org.json:json:20200518'
     compileOnly 'org.projectlombok:lombok'
+    implementation 'com.google.code.gson:gson:2.8.5'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
@@ -36,6 +37,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
     testImplementation 'org.springframework.kafka:spring-kafka-test'
+    testImplementation 'org.projectlombok:lombok'
+
 }
 
 tasks.named('test') {

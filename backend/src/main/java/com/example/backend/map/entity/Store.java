@@ -4,8 +4,9 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
-@Entity(name = "store")
+@Entity(name = "Store")
 @Getter
 @Builder
 @NoArgsConstructor
@@ -24,7 +25,8 @@ public class Store {
     private String addressName;
     private String roadAddressName;
     private String phone;
-    private String x;   // 경도
-    private String y;   // 위도
+    private BigDecimal x;   // 경도 longitude
+    private BigDecimal y;   // 위도 latitude
+
 }
 

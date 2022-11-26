@@ -17,11 +17,11 @@ public class StoreServiceTest {
     @Autowired
     KakaoMapService service;
     @Autowired
-    JpaKakaoMapRepository repository;
+//    JpaKakaoMapRepository repository;
     @Test
     public void 가게이름_검색() throws Exception {
-        Optional<Store> result = repository.findByName("두");
+//        Optional<Store> result = repository.findByName("두");
 
-        System.out.println("result.get().toString() = " + result.get().toString());
+//        System.out.println("result.get().toString() = " + result.get().toString());
     }
 }

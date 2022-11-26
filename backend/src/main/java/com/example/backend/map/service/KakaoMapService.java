@@ -2,6 +2,7 @@ package com.example.backend.map.service;
 
 import com.example.backend.map.entity.Store;
 import com.example.backend.map.repository.KakaoMapRepository;
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -26,14 +29,15 @@ import java.util.Map;
 @ToString
 public class KakaoMapService {
 
+    private final KakaoMapRepository kakaoMapRepository;
+
     @Value("${REST_KEY}")
     private String key;                                      // 카카오 REST_KEY
     private final int radius = 3000;                         // 반경
     private final String url = "https://dapi.kakao.com";     // 기본 url
     private final String CATEGORY_GROUP_CODE = "FD6";        // 음식점
-    private final KakaoMapRepository kakaoMapRepository;
 
-    public void getStoreByCategory(String x, String y){
+    public void kakaoApi(String x, String y){
         URI targetUrl;                  // 요청 url
         ResponseEntity<Map> result;     // 응답 정보
         JSONObject jsonObj;             // 응답 정보를 json으로 변환
@@ -76,17 +80,16 @@ public class KakaoMapService {
                 JSONObject obj = documents.getJSONObject(i);
 
                 // db 내에 이미 정보가 있으면 스킵
-                if(kakaoMapRepository.findByName(obj.getString("place_name")).isPresent())
+                if(kakaoMapRepository.findByPlaceName(obj.getString("place_name")).isPresent())
                     continue;
 
                 store = Store.builder()
                         .addressName(obj.getString("road_address_name"))
                         .roadAddressName(obj.getString("address_name"))
-                        .distance(obj.getString("distance"))
                         .phone(obj.getString("phone"))
                         .placeName(obj.getString("place_name"))
-                        .x(obj.getString("x"))
-                        .y(obj.getString("y")).build();
+                        .x(BigDecimal.valueOf(obj.getDouble("x")))
+                        .y(BigDecimal.valueOf(obj.getDouble("y"))).build();
 
                 kakaoMapRepository.save(store);
             }
@@ -95,4 +98,16 @@ public class KakaoMapService {
 
         log.info("insert success");
     }
+
+    public JSONArray aroundStoreByXY(BigDecimal x, BigDecimal y, int radius){
+        List<Store> stores = kakaoMapRepository.selectByDistance(x, y, radius);
+        String json = new Gson().toJson(stores);
+        JSONArray jsonArr = new JSONArray(json);
+
+        return jsonArr;
+    }
+
+
+
+
 }
