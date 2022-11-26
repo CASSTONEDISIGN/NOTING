@@ -107,6 +107,14 @@ public class KakaoMapService {
         return jsonArr;
     }
 
+    public JSONArray getAll(){
+        List<Store> all = kakaoMapRepository.findAll();
+        String json = new Gson().toJson(all);
+        JSONArray jsonArr = new JSONArray(json);
+
+        return jsonArr;
+    }
+
 
 
 

@@ -21,7 +21,6 @@ public class Store {
     private long id;
     @Column(name = "place_name")
     private String placeName;
-    private String distance;
     private String addressName;
     private String roadAddressName;
     private String phone;

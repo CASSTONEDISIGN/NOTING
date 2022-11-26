@@ -14,6 +14,7 @@ import java.util.Optional;
 @Repository
 public interface KakaoMapRepository extends JpaRepository<Store, Long> {
     Optional<Store> findByPlaceName(String placeName);
+
     Optional<Store> findByPlaceNameLike(String placeName);
     @Query(value = "SELECT\n" +
             "    *,\n" +
@@ -22,4 +23,7 @@ public interface KakaoMapRepository extends JpaRepository<Store, Long> {
             "HAVING distance <= :radius\n" +
             "ORDER BY distance ASC;", nativeQuery = true)
     List<Store> selectByDistance(@Param(value ="x") BigDecimal x, @Param(value = "y") BigDecimal y, @Param(value = "radius") int radius);
+
+    @Query(value = "select * from `store`", nativeQuery = true)
+    List<Store> findAll();
 }
