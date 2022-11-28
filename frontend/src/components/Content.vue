@@ -103,7 +103,7 @@ export default {
 }
 
 .content {
-  margin-bottom: 30px;
+  margin-bottom: -30px;
   font-weight: 600;
   min-height: 100px;
 }

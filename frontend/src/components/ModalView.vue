@@ -32,11 +32,12 @@ export default {};
   justify-content: center;
   max-width: 40%;
   margin: auto;
-  margin-top: 82px;
+  margin-top: 5%;
   background-color:#cdefed;
-  padding: 20px;
-  min-height: 800px;
+  padding: 0, 80px;
+  min-height: 700px;
   z-index: 10;
+  margin-left: 700px;
   opacity: 1;
 }
 </style>
