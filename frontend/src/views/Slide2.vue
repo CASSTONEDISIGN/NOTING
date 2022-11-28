@@ -333,7 +333,7 @@ export default {
     padding: 10px;">
 		<div class="head_tooltip">
 			<strong class="placename" style="font-size: 30px; color: teal">유정 식당</strong>
-			<a href="#none" target="_blank" data-id="detail" class="detail" style="padding-left:114px">상세보기<span class="img_tooltip coach_detail"></span></a>
+			<a href="#none" target="_blank" data-id="detail" class="detail" style="padding-left:100px">상세보기<span class="img_tooltip coach_detail"></span></a>
 		</div>
 		<div class="metadata">
 		</div>
@@ -349,6 +349,7 @@ export default {
 				</p>
 
 			</div>
+      <span style="color:white"> sa</span>
 		</div>
         <div data-id="addition" class="addition HIDDEN"></div>
         <div class="toolbar" data-id="toolbar"><div>
