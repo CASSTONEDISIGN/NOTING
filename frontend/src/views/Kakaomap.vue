@@ -72,7 +72,7 @@
               <div style="margin-bottom: 20px">
                 <h2>충주시 대소원면</h2>
               </div>
-              <div style="display: flex; gap: 1px; margin-bottom: 910px">
+              <div style="display: flex; gap: 1px; margin-bottom: 567px">
                 <v-icon x-large color="orange">mdi-white-balance-sunny</v-icon>
                 <h2
                   style="

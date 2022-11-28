@@ -329,11 +329,11 @@ export default {
               position,
             })
         );
-        const iwContent = `<div >   <div class="body" data-id="body" style="min-height: 140px; min-width: 140px;
-    padding: 30px;">
+        const iwContent = `<div >   <div class="body" data-id="body" style="min-height: 140px; width: 320px;
+    padding: 10px;">
 		<div class="head_tooltip">
 			<strong class="placename" style="font-size: 30px; color: teal">유정 식당</strong>
-			<a href="#none" target="_blank" data-id="detail" class="detail" style="padding-left:10px">상세보기<span class="img_tooltip coach_detail"></span></a>
+			<a href="#none" target="_blank" data-id="detail" class="detail" style="padding-left:114px">상세보기<span class="img_tooltip coach_detail"></span></a>
 		</div>
 		<div class="metadata">
 		</div>
@@ -343,7 +343,7 @@ export default {
 			</a>
 			<div class="content_place">
 				<p data-id="address" class="address" title="서울 강남구 도산대로28길 14">서울 강남구 도산대로28길 14</p>
-				<p data-id="addInfoAddr" class="addInfoAddr"><span class="zipcode">(우) 06040</span>(지번) 서울 강남구 논현동 8-8</p>
+				<p data-id="addInfoAddr" class="addInfoAddr"><span class="zipcode">(우) 06040</span>(지번) 강남구 논현동 8-8</p>
 				<p data-id="contact" class="contact">
 					<span data-id="phone" class="phone">02-511-4592</span>
 				</p>
@@ -562,5 +562,8 @@ export default {
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
+}
+.v-application p {
+  margin-bottom: 8px;
 }
 </style>

@@ -34,7 +34,7 @@ export default {};
   margin: auto;
   margin-top: 5%;
   background-color:#cdefed;
-  padding: 0, 80px;
+  padding: 0, 80px, 0, 80px;
   min-height: 700px;
   z-index: 10;
   margin-left: 700px;

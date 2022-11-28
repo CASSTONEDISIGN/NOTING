@@ -34,7 +34,7 @@
     background-color:#cdefed;
     padding: 0px 80px 0px 30px;
     min-height: 700px;
-    margin-top: 10%;
+    margin-top: 3%;
     z-index: 10;
     opacity: 1;
   }
