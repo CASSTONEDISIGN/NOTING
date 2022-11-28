@@ -10,7 +10,7 @@
           font-weight: bold;
         "
       >
-        가게 이름
+        유정 식당
       </div>
       <h1>채팅방</h1>
     </div>

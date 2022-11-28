@@ -6,7 +6,7 @@ const store = createStore({
     return {
       account: {
         id: null,
-        name: "Allias",
+        name: "김민기",
       }
     };
   },

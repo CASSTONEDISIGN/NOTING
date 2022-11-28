@@ -345,7 +345,7 @@ export default {
 				<p data-id="address" class="address" title="서울 강남구 도산대로28길 14">서울 강남구 도산대로28길 14</p>
 				<p data-id="addInfoAddr" class="addInfoAddr"><span class="zipcode">(우) 06040</span>(지번) 서울 강남구 논현동 8-8</p>
 				<p data-id="contact" class="contact">
-					<span data-id="phone" class="phone">043-850-2332</span>
+					<span data-id="phone" class="phone">02-511-4592</span>
 				</p>
 
 			</div>

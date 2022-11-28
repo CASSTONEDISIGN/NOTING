@@ -36,7 +36,7 @@
             <v-icon color="red">mdi-message-badge</v-icon>
             <h3>채팅방</h3>
           </v-list-item>
-          <v-list-item link class="infoOption">
+          <v-list-item link class="infoOption" @click="ClickAlarm">
             <v-icon color="red">mdi-bell-badge</v-icon>
             <h3>알림</h3>
           </v-list-item>
@@ -245,6 +245,7 @@ export default {
         pgn: null,
         results: [{ id: 0, place_name: "여긴어디" }],
       },
+      
     };
   },
   mounted() {
@@ -311,6 +312,9 @@ export default {
       get__place__name(this.map.getLevel(), latlng.getLat(), latlng.getLng());
     },
 
+    ClickAlarm(){
+      
+    },
     // [위도, 경도] 로 이루어진 배열들의 모음
     displayMarker(markerPositions) {
       if (this.markers.length > 0) {
