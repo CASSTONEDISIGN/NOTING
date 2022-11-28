@@ -77,9 +77,9 @@
                 <div class="text-center">
                   <v-btn rounded outlined dark @click="step--">Sign in</v-btn>
                 </div>
-                <v-btn class="User_btn" rounded outlined dark @click="UserHome"
+                <!-- <v-btn class="User_btn" rounded outlined dark @click="UserHome"
                   >User</v-btn
-                >
+                > -->
               </v-col>
 
               <v-col cols="12" md="8">

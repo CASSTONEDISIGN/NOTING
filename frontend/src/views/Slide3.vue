@@ -1,5 +1,10 @@
 <template>
   <div>
+    <!-- Modal -->
+    <Chatting v-if="isModalViewed" @close-modal="isModalViewed = false">
+      <Chat />
+    </Chatting>
+
     <div id="map">
       <!-- Side Bar -->
       <v-card class="sidebar">
@@ -7,7 +12,8 @@
         <v-list class="userInfo">
           <v-list-item class="profile">
             <v-img
-              max-width="80px"
+              max-
+              width="80px"
               src="https://randomuser.me/api/portraits/men/90.jpg"
             ></v-img>
 
@@ -26,12 +32,12 @@
             <h3>북마크</h3>
           </v-list-item>
 
-          <v-list-item link class="infoOption">
-            <v-icon color="white">mdi-comment-multiple-outline</v-icon>
+          <v-list-item link class="infoOption" @click="ClickPlace">
+            <v-icon color="red">mdi-message-badge</v-icon>
             <h3>채팅방</h3>
           </v-list-item>
           <v-list-item link class="infoOption">
-            <v-icon color="white">mdi-bell-ring-outline</v-icon>
+            <v-icon color="red">mdi-bell-badge</v-icon>
             <h3>알림</h3>
           </v-list-item>
 
@@ -43,7 +49,7 @@
 
         <!-- 맵 중앙을 중심으로 가게 정보 표기-->
         <v-card :class="isOpen ? 'showSidebar' : 'hideSidebar'">
-          <v-toolbar dense extended extension-height="8" height="78px" >
+          <v-toolbar dense extended extension-height="8" height="78px">
             <v-text-field
               label="장소, 주소 검색"
               hide-details
@@ -54,123 +60,33 @@
               padding-top="24px"
             ></v-text-field>
           </v-toolbar>
-          <v-list-item>
-            <v-list-item-content class="place_list">
-              <div
-                style="
-                  justify-content: center;
-                  padding: 10px;
-                  color: #00635b;
-                  font-size: 28px;
-                  background-color: rgb(206 233 233);
-                  margin-bottom: 20px;
-                "
-              >
-                <v-icon x-large color="teal"> mdi-volume-high </v-icon>
-                업데이트 안내
-              </div>
-              <div style="margin-bottom: 20px">
-                <h2>충주시 대소원면</h2>
-              </div>
-              <div style="display: flex; gap: 1px; margin-bottom: 910px">
-                <v-icon x-large color="orange">mdi-white-balance-sunny</v-icon>
-                <h2
-                  style="
-                    padding-top: 8px;
-                    padding-left: 8px;
-                    padding-right: 8px;
-                  "
-                >
-                  /
-                </h2>
-                <v-icon x-large color="orange">mdi-white-balance-sunny</v-icon>
-                <h2
-                  style="padding-top: 5px; padding-left: 200px; font-size: 27px"
-                >
-                  5
-                </h2>
-                <v-icon large>mdi-temperature-celsius</v-icon>
-                <h2 style="padding-top: 8px; padding-left: 8px">/</h2>
-                <h2
-                  style="padding-top: 5px; padding-left: 8px; font-size: 27px"
-                >
-                  10
-                </h2>
-                <v-icon large>mdi-temperature-celsius</v-icon>
-              </div>
-              <div style="position: absolute; left: 23px; top: 212px">AM</div>
-              <div style="position: absolute; left: 92px; top: 212px">PM</div>
-              <div
-                style="
-                  position: absolute;
-                  left: 14px;
-                  top: 287px;
-                  font-size: 30px;
-                  color: #00635b;
-                "
-              >
-                추천
-              </div>
-              <div style="position: absolute; left: 14px; top: 340px">
-                <img src="../../src/assets/wkdtnrhf.jpg" width="460px" alt="" />
-              </div>
-              <div style="overflow: scroll">
-                <h2
-                  style="
-                    position: absolute;
-                    left: 10px;
-                    top: 670px;
-                    color: rgb(20 177 164);
-                  "
-                >
-                  장수골
-                </h2>
-                <h3 style="position: absolute; left: 92px; top: 676px">한식</h3>
-                <div
-                  style="
-                    position: absolute;
-                    left: 380px;
-                    top: 666px;
-                    font-size: x-large;
-                  "
-                >
-                  <v-icon color="red" x-large>mdi-star</v-icon> 4.65
-                </div>
-                <div
-                  style="
-                    position: absolute;
-                    left: 13px;
-                    top: 718px;
-                    font-size: 19px;
-                  "
-                >
-                  충북 충주시 대소원면 쇠실로 984
-                </div>
-                <div style="position: absolute; top: 808px">
-                  <img
-                    src="../../src/assets/rltktlrekd.jpg"
-                    width="460px"
-                    alt=""
-                  />
-                </div>
-              </div>
-            </v-list-item-content>
-            <!-- <v-list-item-content
-              v-for="rs in search.results"
-              :key="rs.id"
-              class="place_list"
-            >
-              <v-list-item-title class="text-h2">
-                {{ rs.place_name }}
-              </v-list-item-title>
-            </v-list-item-content> -->
-          </v-list-item>
+          <v-virtual-scroll :items="items" item-height="84">
+            <template v-slot:default="{ item }">
+              <v-list-item :key="item">
+                <v-list-item-action>
+                  <v-btn fab depressed color="primary">
+                    <strong>{{ item }}</strong>
+                  </v-btn>
+                </v-list-item-action>
+
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <strong>{{ placename[item] }}</strong>
+                  </v-list-item-title>
+                </v-list-item-content>
+
+                <v-list-item-action>
+                  <v-icon large> mdi-open-in-new </v-icon>
+                </v-list-item-action>
+              </v-list-item>
+              <v-divider color="teal"></v-divider>
+            </template>
+          </v-virtual-scroll>
           <button class="fold_button" @click="toggleFold()">
             <v-icon>mdi-menu-left</v-icon>
           </button>
         </v-card>
       </v-card>
-
       <!--  /Side Bar  -->
 
       <!-- Map Option Button -->
@@ -193,23 +109,25 @@
         </button>
       </div>
     </div>
-    <div class="button-group">
-      <button @click="displayMarker(markerPositions1)">marker set 1</button>
-      <button @click="displayMarker(markerPositions2)">marker set 2</button>
-      <button @click="displayMarker([])">marker set 3 (empty)</button>
-      <button @click="displayInfoWindow">infowindow</button>
-    </div>
   </div>
 </template>
 
 <script>
 import store from "../Store/store";
+import Chatting from "../components/Chatting";
 // import get__place from "../API/GET/get";
 import get__place__name from "../API/GET/get";
+import Chat from "../components/Chat.vue";
 
 export default {
+  components: {
+    Chatting,
+    Chat,
+  },
   data() {
     return {
+      placeNameProp: "",
+      isModalViewed: false,
       store: store,
       markerPositions1: [
         [33.452278, 126.567803],
@@ -226,49 +144,100 @@ export default {
         [37.49646391248451, 127.02675574250912],
       ],
       markerPositions3: [
-        [36.96475796179156, 127.87092962031538],
-        [36.9645887850697, 127.871427379772],
-        [36.9634423299284, 127.871101030708],
-        [36.96317635031259, 127.87026370742193],
-        [36.9652272187733, 127.871852375899],
-        [36.9650646899668, 127.870916271018],
-        [36.963962986068, 127.871245077327],
-        [36.9645750285612, 127.871337391682],
-        [36.963994696407, 127.871344252354],
-        [36.9634914836494, 127.870664792256],
-        [36.9637939307276, 127.87119823568],
-        [36.96395032286666, 127.87125167031604],
-        [36.9635823347936, 127.870686038623],
-        [36.9647286149388, 127.870913565497],
-        [36.9650521256159, 127.8709093905],
-        [36.96408901216124, 127.87077041062898],
-        [36.9633692133337, 127.870627467931],
-        [36.96395389384447, 127.87125620253748],
-        [36.9644269047346, 127.871385110643],
-        [36.9638769728943, 127.870687148229],
-        [36.965232366756375, 127.871764848347],
-        [36.96505363108254, 127.87094983198573],
-        [36.96522031928057, 127.87156483466491],
-        [36.9638552834197, 127.870695884271],
-        [36.9651981013861, 127.870908807595],
-        [36.9648762114907, 127.87093770475671],
-        [36.9648883607757, 127.870878329683],
-        [36.96453991561552, 127.87071940163963],
-        [36.96435856606099, 127.87087454060834],
-        [36.9650572963569, 127.871432719986],
-        [36.9634700050523, 127.871136155145],
-        [36.965229655563014, 127.87176594033251],
-        [36.9644304757065, 127.8713896429],
-        [36.963953869127444, 127.87125957090191],
-        [36.9652304379531, 127.870922650771],
-        [36.96410204587237, 127.87071329197747],
-        [36.9652298236221, 127.871497568971],
-        [36.9634609869793, 127.871137175269],
-        [36.9635657953382, 127.871343855813],
-        [36.9632143099913, 127.87123093160251],
-        [36.96385447257941, 127.87129773903422],
+        [37.5124709837621, 127.034448304491],
+        [37.5145374347634, 127.029458772737],
+        [37.51607668051205, 127.0405083407439],
+        [37.5160878327651, 127.039503895459],
+        [37.515804825807, 127.039777480852],
+        [37.5184332106763, 127.030107335874],
+        [37.5137410270759, 127.041235508952],
+        [37.51534824556843, 127.02982783908611],
+        [37.510094191886, 127.039984825259],
+        [37.5203166598331, 127.035338774027],
+        [37.5109939056625, 127.032438859511],
+        [37.5154880272396, 127.032752996488],
+        [37.5181106885105, 127.036378409568],
+        [37.51681990831254, 127.03810165545936],
+        [37.5183363984135, 127.028093809321],
+        [37.5171664315327, 127.036396049667],
+        [37.51613789121324, 127.04067578249368],
+        [37.50986785826047, 127.03779952558008],
+        [37.5116883705501, 127.036257660784],
+        [37.5138453495258, 127.041787545596],
+        [37.51750792479384, 127.03917208292052],
+        [37.5162295938164, 127.035721434633],
+        [37.51651184190703, 127.0378628271788],
+        [37.521617677973204, 127.03543893519856],
+        [37.52186058560857, 127.03662909986537],
+        [37.510603796848, 127.045938976373],
+        [37.515803126376866, 127.04208160106053],
+        [37.507238568097, 127.032256273604],
+        [37.5173646606217, 127.036368998147],
+        [37.5161357904841, 127.036047158128],
+        [37.519029563585256, 127.04223838500221],
+        [37.5168419652755, 127.036735237162],
+        [37.5172951984351, 127.039441187112],
+        [37.5174836597289, 127.036151873189],
+        [37.52114818515884, 127.03854050539661],
+        [37.514849856696365, 127.03670145820617],
+        [37.5167706707282, 127.034115460694],
+        [37.5189524291083, 127.029148302031],
+        [37.520450854963826, 127.03551983007482],
+        [37.52114936759734, 127.03472831049967],
+        [37.51693197944849, 127.03701128228153],
+        [37.5151015236742, 127.035766141908],
+        [37.5201970504659, 127.037533247377],
+        [37.5152792229316, 127.04324523621],
+        [37.5165417172405, 127.040160199231],
       ],
       markers: [],
+      placename: [
+        `진대감 논현본점`,
+        `홍명`,
+        `스시도우`,
+        `공리 강남구청역점`,
+        `진전복삼계탕`,
+        `우정양곱창`,
+        `남도음식토말 본점`,
+        `로얄라운지`,
+        `아카라`,
+        `영동장어`,
+        `세종한우 2호점`,
+        `더수제비 논현점`,
+        `해몽`,
+        `한교방서울면옥`,
+        `유정식당`,
+        `맛짱조개`,
+        `정가네손칼국수`,
+        `가나돈까스의집`,
+        `크래버대게나라 강남점`,
+        `카메스시`,
+        `노란상소갈비 강남구청점`,
+        `홈수끼 학동점`,
+        `팔당닭발&오징어 강남본점`,
+        `마켓오 압구정점`,
+        `스시코우지`,
+        `수담한정식`,
+        `봉밀가`,
+        `일일향 2호점`,
+        `136길 육미`,
+        `진미평양냉면`,
+        `무오키`,
+        `땅코참숯구이 논현직영점`,
+        `게방식당`,
+        `대삼식당`,
+        `대가방 본점`,
+        `슈퍼집 논현점`,
+        `가람국시 논현동점`,
+        `평양면옥`,
+        `한성칼국수`,
+        `한우리 본점`,
+        `고향집`,
+        `단스시 논현본점`,
+        `돌곰네`,
+        `젠제로`,
+        `창우수산 활새우직판장 강남구청점`,
+      ],
       infowindow: null,
       isOpen: true,
       search: {
@@ -290,6 +259,14 @@ export default {
       document.head.appendChild(script);
     }
   },
+  computed: {
+    items() {
+      return Array.from({ length: this.length }, (k, v) => v + 1);
+    },
+    length() {
+      return 44;
+    },
+  },
   methods: {
     initMap() {
       const container = document.getElementById("map");
@@ -301,6 +278,7 @@ export default {
       //지도 객체를 등록합니다.
       //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
       this.map = new kakao.maps.Map(container, options);
+      this.displayMarker(this.markerPositions3);
     },
     zoomIn() {
       let level = this.map.getLevel();
@@ -327,29 +305,12 @@ export default {
       this.isOpen = !this.isOpen;
       console.log(this.isOpen);
     },
-    searchPlace(e) {
-      const keyword = e.target.value.trim();
-      // 빈칸이면 반환 없음
-      if (keyword.length === 0) {
-        return;
-      }
-      else {
-        this.$router.replace("/slide2");
-      }
-      // get__place(this.map.getLevel(), keyword);
-
-      // ps는 data, status, pgn의 정보를 받아옴
-      // ps.keywordSearch(keyword, (data, status, pgn) => {
-      //   this.search.keyword = keyword;
-      //   this.search.pgn = pgn;
-      //   this.search.results = data;
-      // })
-    },
 
     searchPlaceNow() {
       let latlng = this.map.getCenter();
       get__place__name(this.map.getLevel(), latlng.getLat(), latlng.getLng());
     },
+
     // [위도, 경도] 로 이루어진 배열들의 모음
     displayMarker(markerPositions) {
       if (this.markers.length > 0) {
@@ -360,45 +321,73 @@ export default {
         (position) => new kakao.maps.LatLng(...position)
       );
 
-      if (positions.length > 0) {
-        this.markers = positions.map(
-          (position) =>
-            new kakao.maps.Marker({
-              map: this.map,
-              position,
-            })
-        );
+      //         if (positions.length > 0) {
+      //           this.markers = positions.map(
+      //             (position) =>
+      //               new kakao.maps.Marker({
+      //                 map: this.map,
+      //                 position,
+      //               })
+      //           );
+      //           const iwContent = `<div >   <div class="body" data-id="body" style="min-height: 140px; min-width: 140px;
+      //       padding: 30px;">
+      //           <div class="head_tooltip">
+      //               <strong class="placename" style="font-size: 30px; color: teal">유정 식당</strong>
+      //               <a href="#none" target="_blank" data-id="detail" class="detail" style="padding-left:10px">상세보기<span class="img_tooltip coach_detail"></span></a>
+      //           </div>
+      //           <div class="metadata">
+      //           </div>
+      //           <div class="content">
+      //               <a href="#none" data-id="placeimg" class="thumb_place">
+      //                   <span class="frame_g"></span>
+      //               </a>
+      //               <div class="content_place">
+      //                   <p data-id="address" class="address" title="서울 강남구 도산대로28길 14">서울 강남구 도산대로28길 14</p>
+      //                   <p data-id="addInfoAddr" class="addInfoAddr"><span class="zipcode">(우) 06040</span>(지번) 서울 강남구 논현동 8-8</p>
+      //                   <p data-id="contact" class="contact">
+      //                       <span data-id="phone" class="phone">043-850-2332</span>
+      //                   </p>
 
-        // // 지도 범위 재설정
-        // const bounds = positions.reduce(
-        //   (bounds, latlng) => bounds.extend(latlng),
-        //   new kakao.maps.LatLngBounds()
-        // );
+      //               </div>
+      //           </div>
+      //           <div data-id="addition" class="addition HIDDEN"></div>
+      //           <div class="toolbar" data-id="toolbar"><div>
+      //       <div class="InfoWindowToolbar">
 
-        // this.map.setBounds(bounds);
-      }
+      //       </div>
+
+      //   </div></div>
+
+      //           <!--
+      //           <a data-id="intercityBtn" href="#" class="intercityBtn HIDDEN">실시간예매</a>
+      //           -->
+      //       </div>  </div>`;
+      //           // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+
+      //           // 인포윈도우를 생성합니다
+      //           const infowindow = new kakao.maps.InfoWindow({
+      //             content: iwContent,
+      //             removable: true,
+      //           });
+
+      //           // 마커에 클릭이벤트를 등록합니다
+      //           this.markers.forEach((marker) =>
+      //             marker.addListener("click", () => {
+      //               infowindow.open(this.map, marker);
+      //             })
+      //           );
+
+      //         }
+      // 지도 범위 재설정
+      const bounds = positions.reduce(
+        (bounds, latlng) => bounds.extend(latlng),
+        new kakao.maps.LatLngBounds()
+      );
+
+      this.map.setBounds(bounds);
     },
-
-    // Click Marker로 변경, marker를 클릭 시 인포윈도우를 띄움
-    displayInfoWindow() {
-      if (this.infowindow && this.infowindow.getMap()) {
-        //이미 생성한 인포윈도우가 있기 때문에 지도 중심좌표를 인포윈도우 좌표로 이동시킨다.
-        this.map.setCenter(this.infowindow.getPosition());
-        return;
-      }
-
-      let iwContent = '<div style="padding:5px;">Hello World!</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-        iwPosition = new kakao.maps.LatLng(33.450701, 126.570667), //인포윈도우 표시 위치입니다
-        iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-
-      this.infowindow = new kakao.maps.InfoWindow({
-        map: this.map, // 인포윈도우가 표시될 지도
-        position: iwPosition,
-        content: iwContent,
-        removable: iwRemoveable,
-      });
-
-      this.map.setCenter(iwPosition);
+    ClickPlace() {
+      this.isModalViewed = true;
     },
   },
 };
@@ -410,12 +399,6 @@ export default {
   width: 100vw;
   height: 100vh;
 }
-
-.button-group {
-  position: absolute;
-  top: 30px;
-}
-
 .controll_btn {
   padding: 9px;
   min-width: fit-content;
@@ -499,11 +482,6 @@ export default {
 .infoOption:hover {
   color: rgb(255, 255, 255);
   background-color: #00635b;
-}
-
-.place_list {
-  display: grid;
-  flex-direction: column;
 }
 
 /** side bar fold button */

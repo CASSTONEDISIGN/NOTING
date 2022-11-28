@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 import UserHome from '../views/UserHome.vue'
 import MarketHome from '../views/MarketHome.vue'
 import Map from '../views/Kakaomap'
-import Chat from '../views/Chat.vue'
+import Slide2 from '../views/Slide2.vue'
+import Slide3 from '../views/Slide3.vue'
 
 Vue.use(VueRouter)
 
@@ -24,9 +25,14 @@ const routes = [
     component: Map
   },
   {
-    path: '/chat',
-    name: 'chat',
-    component: Chat
+    path: '/slide2',
+    name: 'slide2',
+    component: Slide2
+  },
+  {
+    path: '/slide3',
+    name: 'slide3',
+    component: Slide3
   },
 ]
 

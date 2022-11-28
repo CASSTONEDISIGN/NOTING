@@ -73,14 +73,14 @@
                 <div class="text-center">
                   <v-btn rounded outlined dark @click="step--">Sign in</v-btn>
                 </div>
-                <v-btn
+                <!-- <button
                   class="market_btn"
                   rounded
                   outlined
                   dark
                   @click="MarketHome"
-                  >Market</v-btn
-                >
+                  >Market</button
+                > -->
               </v-col>
 
               <v-col cols="12" md="8">
